@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import { UpdateUser as updateUser } from "../Middlewares/UpdateUser.js";
-import { DeleteUser as deleteUser } from "../Middlewares/DeleteUser.js";
-import { GetUser as getUser } from "../Middlewares/GetUser.js";
-import { Auth as auth } from "../Middlewares/Auth.js";
-import { Login as login } from "../Middlewares/Login.js";
+import { UpdateUser as updateUser } from "../Middlewares/Profil/UpdateUser.js";
+import { DeleteUser as deleteUser } from "../Middlewares/Profil/DeleteUser.js";
+import { GetUser as getUser } from "../Middlewares/Profil/GetUser.js";
+import { Auth as auth } from "../Middlewares/Profil/Auth.js";
+import { Login as login } from "../Middlewares/Profil/Login.js";
 
 const router = Router();
 
