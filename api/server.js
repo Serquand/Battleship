@@ -1,13 +1,13 @@
-require("dotenv").config()
+import * as dotenv from 'dotenv'
+dotenv.config()
+const PORT = process.env.PORT || 6251
 
-const express = require("express")
-const cors = require("cors") 
-const Server = require('socket.io').Server
-const uuid = require("uuid")
-const http = require("http")
-const cors = require("cors")
+import express from 'express'
+import * as http from "http"
+import { Server } from "socket.io"
+import cors from 'cors'
 
-const PORT = process.env.PORT || 5000
+import setup from './Models/Setup.js'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -17,12 +17,14 @@ app.use(cors(process.env.URL_WEBSITE))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
-
-app.listen(PORT, () => {
-    console.clear()
-    console.log("Server is listening on PORT :", PORT)
-})
+const sessions = {}
 
 io.on("connection", socket => {
+    console.log("A new user is now connected !")
     
+})
+
+httpServer.listen(PORT, () => {
+    console.log("Server is listening on PORT :", PORT)
+    setup()
 })
