@@ -1,3 +1,5 @@
-export default async () => {
+const updateUser = async () => {
     
 }
+
+export default updateUser;

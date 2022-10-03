@@ -8,6 +8,7 @@ import { Server } from "socket.io"
 import cors from 'cors'
 
 import setup from './Models/Setup.js'
+import routerProfil from './Routes/Profil.js'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -17,11 +18,12 @@ app.use(cors(process.env.URL_WEBSITE))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
+app.use("/profil", routerProfil)
+
 const sessions = {}
 
 io.on("connection", socket => {
-    console.log("A new user is now connected !")
-    
+    console.log("A new user is now connected !")  
 })
 
 httpServer.listen(PORT, () => {

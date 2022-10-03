@@ -1,3 +1,5 @@
-export default async () => {
+const deleteUser = async () => {
     
 }
+
+export default deleteUser;
