@@ -12,6 +12,7 @@ export const useAuthStore = defineStore("Auth", {
 
   actions: {
     async login(pseudo, email, pwd, mode) {
+      console.log(pwd);
       var requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -20,8 +20,7 @@ const emailValid = (email) => {
 const signIn = async (req, res, next) => {
     const user = { pseudo: req.body.username, password: req.body.pwd }
     const { rows } = await Players.findAndCountAll({ where: { Pseudo: user.pseudo} }) 
-
-    if(rows.length == 0 || (!(await compare(user.password, rows[0].dataValues.Password)))) 
+    if(rows.length == 0 || (!(await compare(user.password, rows[0].dataValues.Password))))
         return res.status(401).send({ error: "Pseudo ou mot de passe incorrect" })
     
     const token = sign({ userId: user.pseudo }, process.env.SALT_JWT, { expiresIn: '24h' })
