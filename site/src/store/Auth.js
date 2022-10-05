@@ -25,15 +25,17 @@ export const useAuthStore = defineStore("Auth", {
       };
 
       let res = await fetch(url + "/profil/login", requestOptions);
-      if (res.status === 200 || res.status === 201) {
-        res = await res.json();
-        this.jwtToken = res.token;
-        this.username = res.userId;
-        this.email = res.email;
-        if (router.currentRoute.value.query.redirect)
-          router.push(router.currentRoute.value.query.redirect);
-        else router.push("/");
-      }
+      
+      if(!(res.status === 200 || res.status === 201)) return { success: false, error: (await res.json()).error }
+
+      if (router.currentRoute.value.query.redirect) router.push(router.currentRoute.value.query.redirect);
+      else router.push("/");
+      res = await res.json();
+      this.jwtToken = res.token;
+      this.username = res.userId;
+      this.email = res.email;
+
+      return { success: true, information: res.information }
     },
 
     async isLoggedIn() {
