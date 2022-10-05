@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import Home from '../views/Home.vue'
 import NotFound from '../views/NotFound.vue'
 import Login from '../views/Login.vue'
 import Profil from '../views/Profil.vue'
 import Game from '../views/Game.vue'
 import Ranking from '../views/Ranking.vue'
+
+import { useAuthStore } from '../store/Auth'
 
 const routes = [
   {
@@ -15,12 +18,14 @@ const routes = [
   {
     path: '/game', 
     name: "Game", 
-    component: Game
+    component: Game, 
+    meta: { requireAuth: true }
   },
   {
     path: '/ranking', 
     name: "Ranking", 
-    component: Ranking
+    component: Ranking, 
+    meta: { requireAuth: true }
   },
   {
     path: '/login', 
@@ -30,7 +35,8 @@ const routes = [
   {
     path: '/profil', 
     name: 'Profil', 
-    component: Profil
+    component: Profil, 
+    meta: { requireAuth: true }
   },
   {
     path: '/:pathMatching(.*)*', 
@@ -44,4 +50,11 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach(async to => {
+  const auth = useAuthStore()
+  if(to.meta?.requireAuth && !(await auth.isLoggedIn())) return { 
+      path: '/login', 
+      query: { redirect: to.fullPath } 
+  }
+})
 export default router

@@ -27,6 +27,7 @@ io.on("connection", socket => {
 })
 
 httpServer.listen(PORT, () => {
+    console.clear()
     console.log("Server is listening on PORT :", PORT)
     setup()
 })

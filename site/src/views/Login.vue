@@ -54,10 +54,11 @@ export default {
     methods: {
         async login() {
             const auth = useAuthStore()
-            console.log(this.username, "", this.password, "Connexion")
             const login = await auth.login(this.username, "", this.password, "Connexion")
-            console.log(login)
-            if(!login.success) this.state++;
+            if(!login.success) {
+                this.state++;
+                this.error = login.error;
+            }
         }
     },
 }

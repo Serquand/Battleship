@@ -12,28 +12,22 @@ export const useAuthStore = defineStore("Auth", {
 
   actions: {
     async login(pseudo, email, pwd, mode) {
-      console.log(pwd);
       var requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: pseudo,
-          email,
-          pwd,
-          mode,
-        }),
+        body: JSON.stringify({ username: pseudo, email, pwd, mode })
       };
 
-      let res = await fetch(url + "/profil/login", requestOptions);
-      
+      let res = await fetch(url + "/profil/login", requestOptions);      
       if(!(res.status === 200 || res.status === 201)) return { success: false, error: (await res.json()).error }
-
-      if (router.currentRoute.value.query.redirect) router.push(router.currentRoute.value.query.redirect);
-      else router.push("/");
+      
       res = await res.json();
-      this.jwtToken = res.token;
+      this.token = res.token;
       this.username = res.userId;
       this.email = res.email;
+
+      if (router.currentRoute.value.query.redirect) await router.push(router.currentRoute.value.query.redirect);
+      else router.push("/");
 
       return { success: true, information: res.information }
     },
@@ -43,16 +37,10 @@ export const useAuthStore = defineStore("Auth", {
         this.logout();
         return false;
       }
-      const optionsSearch = {
-        headers: {
-          Authorization: "Bearer " + this.jwtToken,
-        },
-      };
-      const isLoggedInResult = await fetch(
-        url + "/profil/auth/" + this.username,
-        optionsSearch
-      );
-      if (isLoggedInResult.status == 200) return true;
+
+      const optionsSearch = { headers: { Authorization: "Bearer " + this.token } };
+      if ((await fetch(url + "/profil/auth/" + this.username, optionsSearch)).status == 200) return true;
+      
       this.logout();
       return false;
     },

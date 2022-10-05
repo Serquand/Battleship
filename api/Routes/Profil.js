@@ -8,7 +8,7 @@ import login from "../Middlewares/Profil/Login.js";
 
 const routerProfil = Router();
 
-routerProfil.get("/auth/:user", auth);
+routerProfil.get("/auth/:user", auth, (req, res) => res.status(200).json({ information: "Successfully connected !" }));
 routerProfil.get("/:user", auth, getUser);
 routerProfil.post("/login", login);
 routerProfil.delete("/:user", auth, deleteUser);
