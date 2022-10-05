@@ -1,8 +1,7 @@
 import Players from "../Models/Players.js"
 
 export default class Game {
-    constructor(firstPlayer) {
-        this.firstPlayer =  this.getInfoPlayer(firstPlayer)
+    constructor() {
         this.firstGrid = new Array(100)
         this.firstTry = new Array(100)
         this.secondGrid = new Array(100)
@@ -10,15 +9,19 @@ export default class Game {
         this.oneFinish = false
     }
 
-    addSecondPlayer(secondPlayer) {
-        this.secondPlayer = this.getInfoPlayer(secondPlayer)
+    async addSecondPlayer(secondPlayer) {
+        this.secondPlayer = await this.getInfoPlayer(secondPlayer)
+    }
+
+    async addFirstPlayer(firstPlayer) {
+        this.firstPlayer = await this.getInfoPlayer(firstPlayer)
     }
 
     async getInfoPlayer(user) {
-        let infoPlayer = await Players.findOne({
+        return (await Players.findOne({
             attributes: ['id', 'Elo', 'Pseudo'], 
             where: { Pseudo: user }
-        })
+        })).dataValues;
     }
 
 

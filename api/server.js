@@ -46,14 +46,16 @@ io.on("connection", socket => {
 
         if(!sessions[msg]) {
             sessions[msg] = [socket]
-            sessions[msg].game = new Game(user)
+            sessions[msg].game = new Game()
             socket.join("firstPlayer - " + msg)
             socket.join("players - " + msg)
+            await sessions[msg].game.addFirstPlayer(user)
             socket.emit("init")
         } else {
             socket.join("players - " + msg)
             socket.join("secondPlayer - " + msg)
-            sessions[msg].game.addSecondPlayer(user)
+            await sessions[msg].game.addSecondPlayer(user)
+
             io
                 .to(["firstPlayer - " + msg])
                 .emit("beginningGameInfo", sessions[msg].game.eloFirstPlayer, sessions[msg].game.eloSecondPlayer, sessions[msg].game.secondPlayer, "f")
