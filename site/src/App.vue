@@ -1,30 +1,37 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app">
+    <HeaderBar />
+    <router-view></router-view>
   </div>
-  <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url('https://unpkg.com/reset-css@5.0.1/reset.css');
+  
+* {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #000;
+  color: white;
 }
 
-#nav {
-  padding: 30px;
+body  {
+  background: rgb(4, 4, 28);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+.checkbox-hack {
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: none;
+}  
 </style>
+
+<script>
+import HeaderBar from './components/HeaderBar.vue';
+export default {
+  components: {
+    HeaderBar
+  }
+}
+</script>
