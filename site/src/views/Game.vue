@@ -3,8 +3,13 @@
 </template>
 
 <script>
-export default {
+import { io } from 'socket.io-client'
 
+export default {
+  setup() {
+    const socket = io("http://localhost:5000")
+    return { socket }
+  }
 }
 </script>
 
