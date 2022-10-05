@@ -9,6 +9,7 @@ import cors from 'cors'
 
 import setup from './Models/Setup.js'
 import routerProfil from './Routes/Profil.js'
+import _ from './WS/WSHandlers.js';
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -19,8 +20,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
 app.use("/profil", routerProfil)
-
-const sessions = {}
 
 io.on("connection", socket => {
     console.log("A new user is now connected !")  
