@@ -8,6 +8,8 @@ export const useAuthStore = defineStore("Auth", {
     token: "",
     username: "",
     email: "",
+    setState: '', 
+    numberSuccess: 0
   }),
 
   actions: {
@@ -25,6 +27,9 @@ export const useAuthStore = defineStore("Auth", {
       this.token = res.token;
       this.username = res.userId;
       this.email = res.email;
+
+      this.setState = res.information
+      this.numberSuccess++
 
       if (router.currentRoute.value.query.redirect) await router.push(router.currentRoute.value.query.redirect);
       else router.push("/");
