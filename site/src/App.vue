@@ -1,6 +1,11 @@
 <template>
   <div class="app">
     <HeaderBar />
+    <BannerSignIn 
+      v-show="false"
+      :message="'Connexion réussie !'" 
+      :status="'success'"
+    />
     <router-view></router-view>
   </div>
 </template>
@@ -29,9 +34,12 @@ body  {
 
 <script>
 import HeaderBar from './components/HeaderBar.vue';
+import BannerSignIn from './components/BannerSignIn.vue';
+
 export default {
   components: {
-    HeaderBar
+    HeaderBar, 
+    BannerSignIn
   }
 }
 </script>
