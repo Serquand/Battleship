@@ -2,8 +2,9 @@
   <div class="app">
     <HeaderBar />
     <BannerSignIn 
-      v-show="false"
-      :message="'Connexion réussie !'" 
+      v-show="auth.numberSuccess != 0"
+      :key="auth.numberSuccess"
+      :message="auth.setState" 
       :status="'success'"
     />
     <router-view></router-view>
@@ -35,8 +36,14 @@ body  {
 <script>
 import HeaderBar from './components/HeaderBar.vue';
 import BannerSignIn from './components/BannerSignIn.vue';
+import { useAuthStore } from './store/Auth';
 
 export default {
+  setup() {
+    const auth = useAuthStore()
+    return { auth }
+  },
+
   components: {
     HeaderBar, 
     BannerSignIn
