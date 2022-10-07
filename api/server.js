@@ -55,6 +55,7 @@ io.on("connection", socket => {
             socket.join("players - " + msg)
             socket.join("secondPlayer - " + msg)
             await sessions[msg].game.addSecondPlayer(user)
+            sessions[msg].game.status = 'P'
 
             io
                 .to(["firstPlayer - " + msg])
@@ -67,6 +68,8 @@ io.on("connection", socket => {
             io.to(["players - " + msg]).emit("play")
         }
 
+        socket.on("shuffleGrid", () => _.shuffleGrid(sessions[msg], socket, userInformation.user))
+        socket.on("submitPreparation", preparation => _.submitPreparation(io, sessions[msg], msg, preparation))
     })
 })
 
