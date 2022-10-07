@@ -166,10 +166,22 @@ export default class Game {
      * @param {String} user - The user who play
      * @param {Number} shotLocation - The location of the shot 
      */
-    madeAShot(user, shotLocation) {
+    madeAShot(user, shotLocation) {}
 
-    }
 
+    /**
+     * Will check if the boat is corrected placed
+     * @param {Array} boat The array of the case occuped by the boat
+     * @returns {Boolean} If the boat is well placed
+     */
+    checkShip(boat) {
+        const increment = boat[1] - boat[0]
+        if(increment != 10 && increment != 1) return false
+        for(let i = 0; i < boat.length - 1; i++) {
+            if(boat[i + 1] - boat[i] != increment) return false
+        } 
+        return true
+    } 
 
     /**
      * Check if a grid is valid or not
@@ -177,7 +189,37 @@ export default class Game {
      * @returns {boolean} - A boolean according to the check
      */
     gridIsValid(grid) {
-        //TODO 
+        if(grid.length != 100) return false
+        let torpedo = new Array(0), cruiser = new Array(0), destroyer1 = new Array(0), destroyer2 = new Array(0), aircraft = new Array(0)
+        for(let i = 0; i < 100; i++) {
+            switch(grid[i]) {              
+                case null: break
+
+                case 'T':
+                    torpedo.push(i)
+                    break
+                
+                case 'D1':
+                    destroyer1.push(i)
+                    break
+
+                case 'D2':
+                    destroyer2.push(i)
+                    break
+                
+                case 'C':
+                    cruiser.push(i)
+                    break
+                
+                case 'A':
+                    aircraft.push(i)
+                    break
+                
+                default: return false
+            }
+        }
+        if(torpedo.length != 2 || cruiser.length != 4 || destroyer1.length != 3 || destroyer2.length != 3 || aircraft.length != 5) return false 
+
+        return (this.checkShip(torpedo) && this.checkShip(cruiser) && this.checkShip(destroyer1) && this.checkShip(destroyer2) && this.checkShip(aircraft))
     }
 }
-

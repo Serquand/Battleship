@@ -10,10 +10,8 @@ export default class WSHandlers {
     }
 
     submitPreparation(io, session, idSession, preparation) {
-        console.log("submitPreparation")
         if(!session.game.gridIsValid(preparation)) return 
 
-        console.log("The grid is valid !")
         if(!session.game.oneFinish) {
             session.game.oneFinish = true
             return  

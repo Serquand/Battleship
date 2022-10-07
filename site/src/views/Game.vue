@@ -50,10 +50,8 @@ import { useAuthStore } from '../store/Auth'
 
 export default {
   setup() {
-    const 
-      socket = io("http://localhost:5000"), 
-      auth = useAuthStore()
-    return { socket, auth }
+    const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100)
+    return { socket, auth, basisGrid }
   }, 
 
   created() {
@@ -71,16 +69,11 @@ export default {
     }, 
 
     displayArray(array) {
-        console.log(array)
-        let count = 0;
-        for(let i = 0; i < 100; i++) {
-            if(array[i] != null && array[i] != undefined) count++
-        }
-        console.log(count)
+        this.basisGrid = array
     },  
 
     submitPreparation() {
-        this.socket.emit("submitPreparation");
+        this.socket.emit("submitPreparation", this.basisGrid);
     }
   }
 }
