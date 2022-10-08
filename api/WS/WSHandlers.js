@@ -17,11 +17,25 @@ export default class WSHandlers {
             return  
         } 
         io.to("players - " + idSession).emit("startTheGame")
+        io.to("firstPlayer - " + msg).emit("yourTurn", () => session.game.firstTry)
         session.game.status = "R"
+    }
+
+    madeAShot(indexShot) {
+        console.log(indexShot)
+        session.game.madeAShot(indexShot)
     }
 
     shuffleGrid(session, socket, user) {
         const shuffledArray = session.game.shuffleGrid(user)
         socket.emit("returnShuffled", shuffledArray);
+    }
+
+    computeTurn() {
+        
+    }
+
+    checkTheSocketTurn() {
+
     }
 };

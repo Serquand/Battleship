@@ -47,6 +47,11 @@
         v-if="modalInit"
         @cancelSearch="cancelSearch" 
     />
+    <GridShotModal 
+        :arrayTried="triedGrid"
+        v-if="modalPlay"
+        :key="numberTurn"
+    />
 </div>
 </template>
 
@@ -56,18 +61,22 @@ import { useAuthStore } from '../store/Auth'
 import WaitingGameModal from '../components/WaitingGameModal.vue'
 import router from '../router/index'
 import { ref } from 'vue'
+import GridShotModal from '../components/GridShotModal.vue'
 
 export default {
     setup() {
-        const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100), modalInit = ref(false);
-        return { socket, auth, basisGrid, modalInit };
+        const 
+            socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100), modalInit = ref(false), 
+            modalPlay = ref(false), triedGrid = ref([]), numberTurn = ref(0)
+        return { socket, auth, basisGrid, modalInit, modalPlay, triedGrid, numberTurn };
     },
     created() {
         this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token });
         this.socket.on("init", () => this.modalInit = true);
-        this.socket.on("play", () => console.log("We are gonna to launch the game !"));
+        this.socket.on("play", () => this.modalInit = false);
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
-        this.socket.on("startTheGame", () => console.log("We will start the game"));
+        this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
+        this.socket.on("startTheGame", () => this.displayGameView());
     },
     methods: {
         cancelSearch() {
@@ -83,9 +92,24 @@ export default {
         },
         submitPreparation() {
             this.socket.emit("submitPreparation", this.basisGrid);
+        }, 
+        displayModalTurn(triedGrid) {
+            this.triedGrid = triedGrid;
+            this.modalPlay = true
+            this.numeberTurn++
+        }, 
+        madeAShot(indexShot) {
+            this.socket.emit("madeAShot", indexShot)    
+            this.modalPlay = false
+        }, 
+        displayGameView() {
+            
         }
     },
-    components: { WaitingGameModal }
+    components: { 
+        WaitingGameModal, 
+        GridShotModal
+    }
 }
 </script>
 
