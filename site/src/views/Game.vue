@@ -51,6 +51,7 @@
 import { io } from 'socket.io-client'
 import { useAuthStore } from '../store/Auth'
 import WaitingGameModal from '../components/WaitingGameModal.vue'
+import router from '../router/index'
 
 export default {
     setup() {
@@ -66,7 +67,8 @@ export default {
     },
     methods: {
         cancelSearch() {
-            console.log("We are gonna to cancel the search !")
+            this.socket.close()
+            router.push('/')
         },
 
         sendShuffle() {
