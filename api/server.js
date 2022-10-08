@@ -70,6 +70,7 @@ io.on("connection", socket => {
 
         socket.on("shuffleGrid", () => _.shuffleGrid(sessions[msg], socket, userInformation.user))
         socket.on("submitPreparation", preparation => _.submitPreparation(io, sessions[msg], msg, preparation))
+        socket.on("disconnect", () => console.log("disconnect"))
     })
 })
 
