@@ -43,7 +43,10 @@
         </div>
     </div>
 
-    <WaitingGameModal @cancelSearch="cancelSearch" />
+    <WaitingGameModal 
+        v-if="modalInit"
+        @cancelSearch="cancelSearch" 
+    />
 </div>
 </template>
 
@@ -52,15 +55,16 @@ import { io } from 'socket.io-client'
 import { useAuthStore } from '../store/Auth'
 import WaitingGameModal from '../components/WaitingGameModal.vue'
 import router from '../router/index'
+import { ref } from 'vue'
 
 export default {
     setup() {
-        const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100);
-        return { socket, auth, basisGrid };
+        const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100), modalInit = ref(false);
+        return { socket, auth, basisGrid, modalInit };
     },
     created() {
         this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token });
-        this.socket.on("init", () => console.log("We are waiting for another player !"));
+        this.socket.on("init", () => this.modalInit = true);
         this.socket.on("play", () => console.log("We are gonna to launch the game !"));
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
         this.socket.on("startTheGame", () => console.log("We will start the game"));
