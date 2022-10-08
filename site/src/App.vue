@@ -18,11 +18,11 @@
   padding: 0;
   margin: 0;
   border: 1px solid #000;
-  color: white;
 }
 
 body  {
   background: rgb(4, 4, 28);
+  color: white;
 }
 
 .checkbox-hack {
@@ -31,6 +31,24 @@ body  {
   position: fixed;
   display: none;
 }  
+
+.modal {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #3338;
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  color: #444;
+  background: #fff;
+  padding: 20px 50px;
+}
 </style>
 
 <script>

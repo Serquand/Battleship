@@ -1,4 +1,5 @@
 <template>
+    <div class="game-main-container">
     <div class="game">
         <div class="board-container">
             <div class="opponent-board">
@@ -40,42 +41,41 @@
                 class="button button-prepared button-submit button-submit-preparation"
             >Submit</button>
         </div>
-
     </div>
+
+    <WaitingGameModal />
+</div>
 </template>
 
 <script>
 import { io } from 'socket.io-client'
 import { useAuthStore } from '../store/Auth'
+import WaitingGameModal from '../components/WaitingGameModal.vue'
 
 export default {
-  setup() {
-    const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100)
-    return { socket, auth, basisGrid }
-  }, 
-
-  created() {
-    this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token })
-
-    this.socket.on("init", () => console.log("We are waiting for another player !"))
-    this.socket.on("play", () => console.log("We are gonna to launch the game !"))
-    this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray))
-    this.socket.on("startTheGame", () => console.log("We will start the game"))
-  }, 
-
-  methods: {
-    sendShuffle() {
-        this.socket.emit("shuffleGrid")
-    }, 
-
-    displayArray(array) {
-        this.basisGrid = array
-    },  
-
-    submitPreparation() {
-        this.socket.emit("submitPreparation", this.basisGrid);
-    }
-  }
+    setup() {
+        const socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100);
+        return { socket, auth, basisGrid };
+    },
+    created() {
+        this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token });
+        this.socket.on("init", () => console.log("We are waiting for another player !"));
+        this.socket.on("play", () => console.log("We are gonna to launch the game !"));
+        this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
+        this.socket.on("startTheGame", () => console.log("We will start the game"));
+    },
+    methods: {
+        sendShuffle() {
+            this.socket.emit("shuffleGrid");
+        },
+        displayArray(array) {
+            this.basisGrid = array;
+        },
+        submitPreparation() {
+            this.socket.emit("submitPreparation", this.basisGrid);
+        }
+    },
+    components: { WaitingGameModal }
 }
 </script>
 
