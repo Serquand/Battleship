@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <WaitingGameModal />
+    <WaitingGameModal @cancelSearch="cancelSearch" />
 </div>
 </template>
 
@@ -65,6 +65,10 @@ export default {
         this.socket.on("startTheGame", () => console.log("We will start the game"));
     },
     methods: {
+        cancelSearch() {
+            console.log("We are gonna to cancel the search !")
+        },
+
         sendShuffle() {
             this.socket.emit("shuffleGrid");
         },
