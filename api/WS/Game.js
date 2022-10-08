@@ -8,6 +8,7 @@ export default class Game {
         this.secondTry = new Array(100)
         this.oneFinish = false
         this.status = "L"
+        this.numberTurn = 0
     }
 
     async addSecondPlayer(secondPlayer) {
