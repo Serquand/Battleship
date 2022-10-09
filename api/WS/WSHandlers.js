@@ -9,8 +9,14 @@ export default class WSHandlers {
         } catch { return false }
     }
 
-    submitPreparation(io, session, idSession, preparation) {
+    assignPrepToPlayer(socket, idSession, game, preparation) {
+        if(socket.rooms.has("firstPlayer - " + idSession)) game.firstGrid = preparation
+        else game.secondGrid = preparation
+    }
+
+    submitPreparation(io, socket, session, idSession, preparation) {
         if(!session.game.gridIsValid(preparation)) return 
+        this.assignPrepToPlayer(socket, idSession, session.game, preparation)
         if(!session.game.oneFinish) {
             session.game.oneFinish = true
             return  
@@ -21,7 +27,6 @@ export default class WSHandlers {
     }
 
     choiceThePlayerTurn(player, io, idSession, game) {
-        console.log(player)
         if(player != 1) return io.to("firstPlayer - " + idSession).emit("yourTurn", game.firstTry)
         return io.to("secondPlayer - " + idSession).emit("yourTurn", game.secondTry)
     }
@@ -36,6 +41,7 @@ export default class WSHandlers {
         if(!this.checkTheSocketTurn(socket, idSession, player)) return
         if(!session.game.madeAShot(indexShot)) return this.choiceThePlayerTurn(player, io, idSession, session.game)
         session.game.numberTurn ++
+        console.log("Test", session.game.firstGrid, session.game.firstTry, session.game.secondTry)
         io.to("firstPlayer - " + idSession).emit("resultShot", session.game.firstGrid, session.game.firstTry, session.game.secondTry)
         io.to("secondPlayer - " + idSession).emit("resultShot", session.game.secondGrid, session.game.secondTry, session.game.firstTry)
 
@@ -43,8 +49,8 @@ export default class WSHandlers {
         else this.choiceThePlayerTurn(player + 1, io, idSession, session.game)
     }
 
-    shuffleGrid(session, socket, user) {
-        const shuffledArray = session.game.shuffleGrid(user)
+    shuffleGrid(session, socket) {
+        const shuffledArray = session.game.shuffleGrid()
         socket.emit("returnShuffled", shuffledArray);
     }
 

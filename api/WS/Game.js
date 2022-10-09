@@ -104,10 +104,9 @@ export default class Game {
 
     /**
      * Shuffle a grid for the player give in parameters
-     * @param {Number} user - THe user to shuffle the grid
      * @returns {Array} - The shuffled array
      */
-    shuffleGrid(user) {
+    shuffleGrid() {
         let grid = new Array(100), place, direction, temp 
 
         //Aircraft carrier
@@ -156,12 +155,26 @@ export default class Game {
             temp = this.addShip(2, place, direction, grid, 'T') 
         } while(!temp);
         grid = temp
-
-        //Paste the random generated array in the class array
-        if(user == this.firstPlayer.Pseudo) this.firstGrid = grid
-        else this.secondGrid = grid
         
         return grid
+    }
+
+    setTry(shotLocation, user) {
+        if(user == 0) {
+            const ship = this.secondGrid.filter(cell => cell == this.secondGrid[shotLocation])
+            for (const cell of ship) {
+                if(this.firstTry[cell] != 'x' && cell != shotLocation) return 'x'
+            } 
+            for (const cell of ship) this.firstTry[cell] = 'd'
+            return 'd'
+        } else {
+            const ship = this.firstGrid.filter(cell => cell == this.firstGrid[shotLocation])
+            for (const cell of ship) {
+                if(this.secondTry[cell] != 'x' && cell != shotLocation) return 'x'
+            } 
+            for (const cell of ship) this.secondTry[cell] = 'd'
+            return 'd'
+        }
     }
 
     /**
@@ -170,7 +183,16 @@ export default class Game {
      * @param {Number} shotLocation - The location of the shot 
      */
     madeAShot(shotLocation) {
-        console.log(shotLocation)
+        if(shotLocation < 0 || shotLocation > 99) return false
+
+        if(this.numberTurn % 2 == 0) {
+            if(this.firstTry[shotLocation] != null) return false
+            this.firstTry[shotLocation] = this.secondGrid[shotLocation] == null ? "." : this.setTry(shotLocation, 0) 
+        } else {
+            if(this.firstTry[shotLocation] != null) return false
+            this.secondTry[shotLocation] = this.firstGrid[shotLocation] == null ? "." : this.setTry(shotLocation, 1) 
+        }
+        
         return true
     }
 
