@@ -75,7 +75,7 @@ export default {
         this.socket.on("init", () => this.modalInit = true);
         this.socket.on("play", () => this.modalInit = false);
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
-        this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
+        this.socket.on("yourTurn", (triedGrid) => { console.log(triedGrid) ; this.displayModalTurn(triedGrid) })
         this.socket.on("startTheGame", () => this.displayGameView());
         this.socket.on("resultShot", () => console.log("resultShot"))
     },
@@ -95,6 +95,7 @@ export default {
             this.socket.emit("submitPreparation", this.basisGrid);
         }, 
         displayModalTurn(triedGrid) {
+            console.log("displayModalTurn")
             this.triedGrid = triedGrid;
             this.modalPlay = true
             this.numeberTurn++

@@ -1,14 +1,17 @@
 <template>
     <div class="modal grid-shot-modal">
         <div class="modal-content">
-            <div
-                class="grid-shot"
-                v-for="(n, index) in 100"
-                :key="n"
-            >
-                <div 
-                    :class="['grid-shot-case', arrayTried[index]]"
+            <h3 class="grid-shot-title">Select a cell</h3>
+            <div class="grid-content">
+                <div
+                    class="grid-shot"
+                    v-for="(n, index) in 100"
+                    :key="n"
                 >
+                    <div 
+                        :class="['grid-shot-case', arrayTried[index]]"
+                    >
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,6 +21,7 @@
 <script>
 export default {
     setup(props) {
+        console.log(props.arrayTried)
         const arrayDisplay = JSON.parse(JSON.stringify(props.arrayTried)); 
         return { arrayDisplay }
     }, 
@@ -31,19 +35,39 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     .modal-content {
-        padding: 0 !important;
-        background: rgb(4, 4, 28);
+        padding: 50px !important;
+        border-radius: 20px;
+    }
+
+    .grid-shot-title {
+        text-align: center;
+        text-decoration: underline;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .grid-shot-title::after {
+        animation: none;
+    }
+
+    .grid-content {
+        background-color: rgb(4, 4, 28);
         display: grid;
         grid-template: repeat(10, 32px) / repeat(10, 32px);
     }
 
-    .modal-content > div {
+    .grid-content > div {
         width: 30px;
         height: 30px;
-        border: .5px solid white;
+        border: 1px solid white;
         cursor: pointer;
+        transition: all 1s;
+    }
+
+    .grid-content > div:hover {
+        background: white;
     }
 
 </style>
