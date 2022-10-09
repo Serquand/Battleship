@@ -90,11 +90,12 @@ export default {
     // stateGame : 'S' for search a player, 'P' for preparation, 'R' for running and 'E' for ended 
     setup() {
         const 
-            socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100), modalInit = ref(false), 
+            socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = ref([]), modalInit = ref(false), 
             modalPlay = ref(false), triedGrid = ref([]), numberTurn = ref(0), stateGame = ref('S')
         return { socket, auth, basisGrid, modalInit, modalPlay, triedGrid, numberTurn, stateGame };
     },
     created() {
+        this.basisGrid = this.setupBasisGrid()
         this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token });
         
         this.socket.on("init", () => this.modalInit = true);
@@ -113,7 +114,14 @@ export default {
             this.socket.close()
             router.push('/')
         },
-
+        setupBasisGrid() {
+            let matrix = new Array(0)
+            for(let i = 0; i < 10; i++) {
+                matrix.push(new Array(10))
+                for(let j = 0; j < 10; j++) matrix[i][j] = undefined
+            }
+            return matrix
+        },
         sendShuffle() {
             this.socket.emit("shuffleGrid");
         },
@@ -131,7 +139,6 @@ export default {
         },
         displayArray(array) {
             this.basisGrid = this.transformArrayToMatrix(array);
-            console.log(this.basisGrid)
         },
         submitPreparation() {
             this.socket.emit("submitPreparation", this.basisGrid);
@@ -141,15 +148,12 @@ export default {
             this.modalPlay = true
             this.numeberTurn++
         }, 
-        madeAShot(indexShot) {
-            this.socket.emit("madeAShot", indexShot)    
-            this.modalPlay = false
-        }, 
         displayGameView() {
             
         }, 
         submitShot(index) {
             this.socket.emit("madeAShot", index)
+            this.modalPlay = false
         }
     },
     components: { 
