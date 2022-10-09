@@ -8,13 +8,18 @@
             <div class="opponent-board">
                 <div 
                     :key="n"
-                    v-for="(n) in 10"
+                    v-for="(n, i) in 10"
                 >
                     <div
                         :key="m"
-                        v-for="(m) in 10"
-                        class="cell"
-                    ></div>
+                        v-for="(m, j) in 10"
+                        :class="['cell', (myTry[j + i * 10] == 'd' ? 'destroyShip' : myTry[j + i * 10] == '.' ? 'flop' : '')]"
+                    >
+                        <div 
+                            v-if="myTry[j + i * 10] == 'x'"
+                            class="touch"
+                        ></div>   
+                    </div>
                 </div>
             </div>
             
@@ -36,9 +41,9 @@
                                 v-if="oppTry[j + i * 10] == 'x'"
                                 class="touch"
                             ></div>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -121,6 +126,7 @@ export default {
     },
     methods: {
         changeInformation(myGrid, myTry, oppTry) {
+            console.log(myTry, myGrid, oppTry)
             this.myTry = myTry
             this.basisGrid = myGrid
             this.oppTry = oppTry
@@ -159,6 +165,7 @@ export default {
             this.socket.emit("submitPreparation", this.basisGrid);
         }, 
         displayModalTurn(triedGrid) {
+            console.log(triedGrid)
             this.myTry = triedGrid;
             this.modalPlay = true
             this.numeberTurn++
@@ -215,6 +222,14 @@ export default {
 
 .A, .D1, .D2, .T, .C {
     background-color: #fff;  
+}
+
+.destroyShip {
+    background-color: red;
+}
+
+.flop {
+    background-color: green;
 }
 
 .touch::before, .touch::after {

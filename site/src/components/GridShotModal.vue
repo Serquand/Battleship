@@ -5,15 +5,15 @@
             <div class="grid-content">
                 <div
                     class="grid-shot"
-                    v-for="(n, index) in arrayDisplay"
-                    :key="n"
+                    v-for="(element, index) in arrayDisplay"
+                    :key="index"
                     @click="submitShot(index)"
                 >
                     <div 
-                        :class="['cell', (index == 'd' ? 'destroyShip' : index == '.' ? 'flop' : '')]"
+                        :class="['cell', (element == 'd' ? 'destroyShip' : element == '.' ? 'flop' : '')]"
                     >
                         <div 
-                            v-if="index == 'x'"
+                            v-if="element == 'x'"
                             class="touch"
                         ></div>
                     </div>
@@ -27,6 +27,7 @@
 export default {
     setup(props) {
         const arrayDisplay = JSON.parse(JSON.stringify(props.arrayTried)); 
+        console.log(arrayDisplay)
         return { arrayDisplay }
     }, 
     props: {
