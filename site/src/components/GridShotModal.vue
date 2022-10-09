@@ -21,7 +21,6 @@
 <script>
 export default {
     setup(props) {
-        console.log(props.arrayTried)
         const arrayDisplay = JSON.parse(JSON.stringify(props.arrayTried)); 
         return { arrayDisplay }
     }, 
