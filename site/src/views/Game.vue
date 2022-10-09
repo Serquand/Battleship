@@ -123,7 +123,6 @@ export default {
         changeInformation(myGrid, myTry, oppTry) {
             this.myTry = myTry
             this.basisGrid = myGrid
-            console.log(this.basisGrid)
             this.oppTry = oppTry
         },
         cancelSearch() {
