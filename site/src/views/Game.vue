@@ -51,6 +51,7 @@
         :arrayTried="triedGrid"
         v-if="modalPlay"
         :key="numberTurn"
+        @madeShot="submitShot"
     />
 </div>
 </template>
@@ -105,6 +106,10 @@ export default {
         }, 
         displayGameView() {
             
+        }, 
+        submitShot(index) {
+            console.log(index)
+            this.socket.emit("madeAShot", index)
         }
     },
     components: { 

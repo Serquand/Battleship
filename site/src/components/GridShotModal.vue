@@ -7,6 +7,7 @@
                     class="grid-shot"
                     v-for="(n, index) in 100"
                     :key="n"
+                    @click="submitShot(index)"
                 >
                     <div 
                         :class="['grid-shot-case', arrayTried[index]]"
@@ -30,7 +31,11 @@ export default {
             required: true
         }
     }, 
-
+    methods: {
+        submitShot(index) {
+            this.$emit("madeShot", index)
+        }
+    },      
 }
 </script>
 
