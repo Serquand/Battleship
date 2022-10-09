@@ -108,7 +108,6 @@ export default {
             
         }, 
         submitShot(index) {
-            console.log(index)
             this.socket.emit("madeAShot", index)
         }
     },
