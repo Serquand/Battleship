@@ -32,10 +32,8 @@ export default class WSHandlers {
     }
 
     madeAShot(io, session, socket, idSession, indexShot) {
-        console.log("madeAShot")
         const player = this.computeTurn(session)
         if(!this.checkTheSocketTurn(socket, idSession, player)) return
-        console.log("Le bon joueur a joué !!! Ouais ouais ma gueule !")
         if(!session.game.madeAShot(indexShot)) return this.choiceThePlayerTurn(player, io, idSession, session.game)
         session.game.numberTurn ++
         io.to("firstPlayer - " + idSession).emit("resultShot", session.game.firstGrid, session.game.firstTry, session.game.secondTry)

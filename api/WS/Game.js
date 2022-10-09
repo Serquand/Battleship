@@ -43,6 +43,8 @@ export default class Game {
         this.finishGame(user)
     }
 
+    finishGame(user) {}
+
 
     transformArrayToMatrix(grid) {
         let count = 0
@@ -167,7 +169,10 @@ export default class Game {
      * @param {String} user - The user who play
      * @param {Number} shotLocation - The location of the shot 
      */
-    madeAShot(user, shotLocation) {}
+    madeAShot(shotLocation) {
+        console.log(shotLocation)
+        return true
+    }
 
 
     /**
