@@ -1,6 +1,9 @@
 <template>
-    <div class="game-main-container">
-    <div class="game">
+<div class="game-main-container">
+    <div 
+        v-if="stateGame == 'R' || stateGame == 'E'"
+        class="game"
+    >
         <div class="board-container">
             <div class="opponent-board">
                 <div 
@@ -26,6 +29,24 @@
                         v-for="(m) in 10"
                     >
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        v-if="stateGame == 'S' || stateGame == 'P'"
+        class="prepared-game"
+    >
+        <div class="my-board">
+            <div 
+                :key="n"
+                v-for="(n) in 10"
+            >
+                <div
+                    :key="m"
+                    v-for="(m) in 10"
+                >
                 </div>
             </div>
         </div>
@@ -65,20 +86,26 @@ import { ref } from 'vue'
 import GridShotModal from '../components/GridShotModal.vue'
 
 export default {
+    // stateGame : 'S' for search a player, 'P' for preparation, 'R' for running and 'E' for ended 
     setup() {
         const 
             socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = new Array(100), modalInit = ref(false), 
-            modalPlay = ref(false), triedGrid = ref([]), numberTurn = ref(0)
-        return { socket, auth, basisGrid, modalInit, modalPlay, triedGrid, numberTurn };
+            modalPlay = ref(false), triedGrid = ref([]), numberTurn = ref(0), stateGame = ref('S')
+        return { socket, auth, basisGrid, modalInit, modalPlay, triedGrid, numberTurn, stateGame };
     },
     created() {
         this.socket.emit("responseUser", { user: this.auth.username, token: this.auth.token });
+        
         this.socket.on("init", () => this.modalInit = true);
-        this.socket.on("play", () => this.modalInit = false);
+        this.socket.on("play", () => {
+            this.modalInit = false; 
+            this.stateGame = "P"
+        });
+        
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
-        this.socket.on("startTheGame", () => this.displayGameView());
-        this.socket.on("resultShot", () => console.log("resultShot"))
+        this.socket.on("startTheGame", () => this.stateGame = 'R');
+        this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => console.log((myGrid, myTry, oppTRy)))
     },
     methods: {
         cancelSearch() {
