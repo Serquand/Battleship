@@ -17,7 +17,7 @@ export default class WSHandlers {
             return  
         } 
         io.to("players - " + idSession).emit("startTheGame")
-        io.to("firstPlayer - " + msg).emit("yourTurn", () => session.game.firstTry)
+        io.to("firstPlayer - " + idSession).emit("yourTurn", session.game.firstTry)
         session.game.status = "R"
     }
 
