@@ -21,11 +21,29 @@ export default class WSHandlers {
         session.game.status = "R"
     }
 
-    madeAShot(session, socket, idSession, indexShot) {
-        if(!this.checkTheSocketTurn(socket, idSession, this.computeTurn(session))) return
-        if(!session.game.madeAShot(indexShot)) return 
+    choiceThePlayerTurn(player, io, idSession, game) {
+        console.log(player)
+        if(player != 1) return io.to("firstPlayer - " + idSession).emit("yourTurn", game.firstTry)
+        return io.to("secondPlayer - " + idSession).emit("yourTurn", game.secondTry)
+    }
+
+    choiceTheUserVictory(player, io, idSession, game) {
+        console.log(player)
+        game.finishGame()
+    }
+
+    madeAShot(io, session, socket, idSession, indexShot) {
+        console.log("madeAShot")
+        const player = this.computeTurn(session)
+        if(!this.checkTheSocketTurn(socket, idSession, player)) return
+        console.log("Le bon joueur a joué !!! Ouais ouais ma gueule !")
+        if(!session.game.madeAShot(indexShot)) return this.choiceThePlayerTurn(player, io, idSession, session.game)
         session.game.numberTurn ++
-        io.emit("resultShot")
+        io.to("firstPlayer - " + idSession).emit("resultShot", session.game.firstGrid, session.game.firstTry, session.game.secondTry)
+        io.to("secondPlayer - " + idSession).emit("resultShot", session.game.secondGrid, session.game.secondTry, session.game.firstTry)
+
+        if(session.game.checkVictory(player)) return choiceTheUserVictory(player)
+        else this.choiceThePlayerTurn(player + 1, io, idSession, session.game)
     }
 
     shuffleGrid(session, socket, user) {

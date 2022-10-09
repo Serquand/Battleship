@@ -28,12 +28,12 @@ export default class Game {
 
 
     /**
-     * @param {String} user - The user who have played
+     * @param {Number} user - The user who have played
      * WIll check if the player has won the game, and, if he has, will set status to end and will launch finishGame method
      */
     checkVictory(user) {
-        const grid = user == 's' ? this.firstGrid : this.secondGrid
-        const tryArray = user == 's' ? this.firstTry : this.secondTry
+        const grid = user == 0 ? this.firstGrid : this.secondGrid
+        const tryArray = user == 0 ? this.firstTry : this.secondTry
         
         for(let i = 0; i < 100; i++ ) {
             if(grid != undefined && tryArray == undefined) return
@@ -222,5 +222,9 @@ export default class Game {
         if(torpedo.length != 2 || cruiser.length != 4 || destroyer1.length != 3 || destroyer2.length != 3 || aircraft.length != 5) return false 
 
         return (this.checkShip(torpedo) && this.checkShip(cruiser) && this.checkShip(destroyer1) && this.checkShip(destroyer2) && this.checkShip(aircraft))
+    }
+
+    finishTheGame() {
+        console.log("finishTheGame")
     }
 }
