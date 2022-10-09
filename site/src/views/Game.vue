@@ -77,6 +77,7 @@ export default {
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
         this.socket.on("startTheGame", () => this.displayGameView());
+        this.socket.on("resultShot", () => console.log("resultShot"))
     },
     methods: {
         cancelSearch() {

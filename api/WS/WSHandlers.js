@@ -21,9 +21,11 @@ export default class WSHandlers {
         session.game.status = "R"
     }
 
-    madeAShot(indexShot) {
-        console.log(indexShot)
-        session.game.madeAShot(indexShot)
+    madeAShot(session, socket, idSession, indexShot) {
+        if(!this.checkTheSocketTurn(socket, idSession, this.computeTurn(session))) return
+        if(!session.game.madeAShot(indexShot)) return 
+        session.game.numberTurn ++
+        io.emit("resultShot")
     }
 
     shuffleGrid(session, socket, user) {
@@ -31,11 +33,12 @@ export default class WSHandlers {
         socket.emit("returnShuffled", shuffledArray);
     }
 
-    computeTurn() {
-        
+    computeTurn(session) {
+        return session.game.numberTurn % 2
     }
 
-    checkTheSocketTurn() {
-
+    checkTheSocketTurn(socket, idSession, turn) {
+        if(turn == 0) return socket.rooms.has("firstPlayer - " + idSession)
+        return socket.rooms.has("secondPlayer - " + idSession)
     }
 };
