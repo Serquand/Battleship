@@ -190,6 +190,7 @@ export default class Game {
      * @returns {boolean} - A boolean according to the check
      */
     gridIsValid(grid) {
+        grid = this.transformMatrixToArray(grid)
         if(grid.length != 100) return false
         let torpedo = new Array(0), cruiser = new Array(0), destroyer1 = new Array(0), destroyer2 = new Array(0), aircraft = new Array(0)
         for(let i = 0; i < 100; i++) {

@@ -87,7 +87,7 @@ import { ref } from 'vue'
 import GridShotModal from '../components/GridShotModal.vue'
 
 export default {
-    // stateGame : 'S' for search a player, 'P' for preparation, 'R' for running and 'E' for ended 
+    // stateGame : 'S' for search a player, 'P' for preparation, 'R' for running and 'E' for ended
     setup() {
         const 
             socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = ref([]), modalInit = ref(false), 
@@ -106,7 +106,10 @@ export default {
         
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray)); 
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
-        this.socket.on("startTheGame", () => this.stateGame = 'R');
+        this.socket.on("startTheGame", () => {
+            console.log("We are gonna to launch the game")
+            this.stateGame = 'R'
+        });
         this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => console.log((myGrid, myTry, oppTRy)))
     },
     methods: {

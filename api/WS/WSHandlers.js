@@ -10,12 +10,14 @@ export default class WSHandlers {
     }
 
     submitPreparation(io, session, idSession, preparation) {
+        console.log("Test 1")
         if(!session.game.gridIsValid(preparation)) return 
-
+        console.log("Test 2")
         if(!session.game.oneFinish) {
             session.game.oneFinish = true
             return  
         } 
+        console.log("TEst");
         io.to("players - " + idSession).emit("startTheGame")
         io.to("firstPlayer - " + idSession).emit("yourTurn", session.game.firstTry)
         session.game.status = "R"
