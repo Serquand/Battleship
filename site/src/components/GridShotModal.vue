@@ -9,9 +9,7 @@
                     :key="index"
                     @click="submitShot(index)"
                 >
-                    <div 
-                        :class="['cell', (element == 'd' ? 'destroyShip' : element == '.' ? 'flop' : '')]"
-                    >
+                    <div :class="['cell', (element == 'd' ? 'destroyShip' : element == '.' ? 'flop' : '')]">
                         <div 
                             v-if="element == 'x'"
                             class="touch"

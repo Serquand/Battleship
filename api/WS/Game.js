@@ -162,6 +162,7 @@ export default class Game {
     setTry(shotLocation, user) {
         if(user == 0) {
             const grid = this.transformMatrixToArray(this.secondGrid)
+            console.log(grid[shotLocation])
             const ship = grid.filter(cell => cell == grid[shotLocation])
             for (const cell of ship) {
                 if(this.firstTry[cell] != 'x' && cell != shotLocation) return 'x'
@@ -170,6 +171,7 @@ export default class Game {
             return 'd'
         } else {
             const grid = this.transformMatrixToArray(this.firstGrid)
+            console.log(grid[shotLocation])
             const ship = grid.filter(cell => cell == grid[shotLocation])
             for (const cell of ship) {
                 if(this.secondTry[cell] != 'x' && cell != shotLocation) return 'x'
@@ -189,11 +191,10 @@ export default class Game {
 
         if(this.numberTurn % 2 == 0) {
             if(this.firstTry[shotLocation] != null) return false
-            console.log(this.secondGrid[parseInt(shotLocation / 10)][shotLocation % 10])
             this.firstTry[shotLocation] = this.secondGrid[parseInt(shotLocation / 10)][shotLocation % 10] == null ? "." : this.setTry(shotLocation, 0) 
         } else {
             if(this.secondTry[shotLocation] != null) return false
-            this.secondTry[shotLocation] = this.firstGrid[shotLocation] == null ? "." : this.setTry(shotLocation, 1) 
+            this.secondTry[shotLocation] = this.firstGrid[parseInt(shotLocation / 10)][shotLocation % 10] == null ? "." : this.setTry(shotLocation, 1) 
         }
         
         return true
