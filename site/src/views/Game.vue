@@ -40,13 +40,14 @@
     >
         <div class="my-board">
             <div 
-                :key="n"
-                v-for="(n) in 10"
+                :key="array"
+                v-for="array in basisGrid"
             >
                 <div
-                    :key="m"
-                    v-for="(m) in 10"
+                    :key="element"
+                    v-for="element in array"
                 >
+                    <div :class="['cell', element]"></div>
                 </div>
             </div>
         </div>
@@ -102,7 +103,7 @@ export default {
             this.stateGame = "P"
         });
         
-        this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray));
+        this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray)); 
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
         this.socket.on("startTheGame", () => this.stateGame = 'R');
         this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => console.log((myGrid, myTry, oppTRy)))
@@ -116,8 +117,21 @@ export default {
         sendShuffle() {
             this.socket.emit("shuffleGrid");
         },
+        transformArrayToMatrix(grid) {
+            let count = 0
+            let matrix = new Array(0)
+            for(let i = 0; i < 10; i++) {
+                matrix.push(new Array(10))
+                for(let j = 0; j < 10; j++) {
+                    matrix[i][j] = grid[count]
+                    count++
+                }
+            }
+            return matrix
+        },
         displayArray(array) {
-            this.basisGrid = array;
+            this.basisGrid = this.transformArrayToMatrix(array);
+            console.log(this.basisGrid)
         },
         submitPreparation() {
             this.socket.emit("submitPreparation", this.basisGrid);
@@ -167,7 +181,16 @@ export default {
 :is(.opponent-board, .my-board) > div > div {
     height: 28px;
     width: 28px;
-    border: 1px solid white;
     display: flex;
+}
+
+.cell {
+    border: 1px solid white;
+    width: 100%;
+    height: 100%;
+}
+
+.A, .D1, .D2, .T, .C {
+    background-color: #fff;  
 }
 </style>
