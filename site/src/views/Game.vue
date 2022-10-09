@@ -13,6 +13,7 @@
                     <div
                         :key="m"
                         v-for="(m) in 10"
+                        class="cell"
                     ></div>
                 </div>
             </div>
@@ -21,15 +22,23 @@
 
             <div class="my-board">
                 <div 
-                    :key="n"
-                    v-for="(n) in 10"
+                    :key="array"
+                    v-for="(array, i) in basisGrid"
                 >
                     <div
-                        :key="m"
-                        v-for="(m) in 10"
+                        :key="element"
+                        v-for="(element, j) in array"
                     >
+                        <div 
+                            :class="['cell', element, (oppTry[j + i * 10] == 'd' ? 'destroyShip' : oppTry[j + i * 10] == '.' ? 'flop' : '')]"
+                        >
+                            <div 
+                                v-if="oppTry[j + i * 10] == 'x'"
+                                class="touch"
+                            ></div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -70,7 +79,7 @@
         @cancelSearch="cancelSearch" 
     />
     <GridShotModal 
-        :arrayTried="triedGrid"
+        :arrayTried="myTry"
         v-if="modalPlay"
         :key="numberTurn"
         @madeShot="submitShot"
@@ -91,8 +100,9 @@ export default {
     setup() {
         const 
             socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = ref([]), modalInit = ref(false), 
-            modalPlay = ref(false), triedGrid = ref([]), numberTurn = ref(0), stateGame = ref('S')
-        return { socket, auth, basisGrid, modalInit, modalPlay, triedGrid, numberTurn, stateGame };
+            modalPlay = ref(false), numberTurn = ref(0), stateGame = ref('S'), 
+            myTry = ref(new Array(100)), oppTry = ref(new Array(100))
+        return { socket, auth, basisGrid, modalInit, modalPlay, numberTurn, stateGame, oppTry, myTry };
     },
     created() {
         this.basisGrid = this.setupBasisGrid()
@@ -106,13 +116,15 @@ export default {
         
         this.socket.on("returnShuffled", shuffledArray => this.displayArray(shuffledArray)); 
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
-        this.socket.on("startTheGame", () => {
-            console.log("We are gonna to launch the game")
-            this.stateGame = 'R'
-        });
-        this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => console.log((myGrid, myTry, oppTRy)))
+        this.socket.on("startTheGame", () => this.stateGame = 'R');
+        this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => this.changeInformation(myGrid, myTry, oppTRy))
     },
     methods: {
+        changeInformation(myGrid, myTry, oppTry) {
+            this.myTry = myTry
+            this.basisGrid = myGrid
+            this.oppTry = oppTry
+        },
         cancelSearch() {
             this.socket.close()
             router.push('/')
@@ -147,7 +159,7 @@ export default {
             this.socket.emit("submitPreparation", this.basisGrid);
         }, 
         displayModalTurn(triedGrid) {
-            this.triedGrid = triedGrid;
+            this.myTry = triedGrid;
             this.modalPlay = true
             this.numeberTurn++
         }, 
@@ -195,9 +207,31 @@ export default {
     border: 1px solid white;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .A, .D1, .D2, .T, .C {
     background-color: #fff;  
+}
+
+.touch::before, .touch::after {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: ' ';
+    height: 20px;
+    width: 2px;
+    background-color: red;
+    border-radius: 50px;
+}
+.touch:before {
+    transform: rotate(45deg);
+}
+.touch:after {
+    transform: rotate(-45deg);
 }
 </style>

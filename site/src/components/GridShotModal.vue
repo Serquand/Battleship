@@ -5,13 +5,17 @@
             <div class="grid-content">
                 <div
                     class="grid-shot"
-                    v-for="(n, index) in 100"
+                    v-for="(n, index) in arrayDisplay"
                     :key="n"
                     @click="submitShot(index)"
                 >
                     <div 
-                        :class="['grid-shot-case', arrayTried[index]]"
+                        :class="['cell', (index == 'd' ? 'destroyShip' : index == '.' ? 'flop' : '')]"
                     >
+                        <div 
+                            v-if="index == 'x'"
+                            class="touch"
+                        ></div>
                     </div>
                 </div>
             </div>
