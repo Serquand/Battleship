@@ -89,6 +89,9 @@
         :key="numberTurn"
         @madeShot="submitShot"
     />
+    <ModalEndGame 
+        v-if="stateGame === 'E'"
+    />
 </div>
 </template>
 
@@ -99,6 +102,7 @@ import WaitingGameModal from '../components/WaitingGameModal.vue'
 import router from '../router/index'
 import { ref } from 'vue'
 import GridShotModal from '../components/GridShotModal.vue'
+import ModalEndGame from '../components/ModalEndGame.vue'
 
 export default {
     // stateGame : 'S' for search a player, 'P' for preparation, 'R' for running and 'E' for ended
@@ -127,7 +131,7 @@ export default {
     },
     methods: {
         setEndGame(informationEndGame) {
-            console.log(informationEndGame)
+            this.stateGame = 'E';
         },
         changeInformation(myGrid, myTry, oppTry) {
             this.myTry = myTry
@@ -180,10 +184,11 @@ export default {
             this.modalPlay = false
         }
     },
-    components: { 
-        WaitingGameModal, 
-        GridShotModal
-    }
+    components: {
+    WaitingGameModal,
+    GridShotModal,
+    ModalEndGame
+}
 }
 </script>
 
