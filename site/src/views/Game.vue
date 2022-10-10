@@ -123,8 +123,12 @@ export default {
         this.socket.on("yourTurn", (triedGrid) => this.displayModalTurn(triedGrid))
         this.socket.on("startTheGame", () => this.stateGame = 'R');
         this.socket.on("resultShot", (myGrid, myTry, oppTRy)  => this.changeInformation(myGrid, myTry, oppTRy))
+        this.socket.on("endGame", information => this.setEndGame(information))
     },
     methods: {
+        setEndGame(informationEndGame) {
+            console.log(informationEndGame)
+        },
         changeInformation(myGrid, myTry, oppTry) {
             console.log(myTry, myGrid, oppTry)
             this.myTry = myTry

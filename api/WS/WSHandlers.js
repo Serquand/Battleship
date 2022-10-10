@@ -31,8 +31,11 @@ export default class WSHandlers {
         return io.to("secondPlayer - " + idSession).emit("yourTurn", game.secondTry)
     }
 
-    choiceTheUserVictory(player, io, idSession, game) {
-        const information = game.finishGame(player);
+    async choiceTheUserVictory(player, io, idSession, game) {
+        const information = await game.finishGame(player);
+        console.log(information);
+        io.to("firstPlayer - " + idSession).emit("endGame", information.resultFirst)
+        io.to("secondPlayer - " + idSession).emit("endGame", information.resultSecond)
     }
 
     madeAShot(io, session, socket, idSession, indexShot) {
