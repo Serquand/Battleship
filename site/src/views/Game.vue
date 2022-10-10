@@ -130,7 +130,6 @@ export default {
             console.log(informationEndGame)
         },
         changeInformation(myGrid, myTry, oppTry) {
-            console.log(myTry, myGrid, oppTry)
             this.myTry = myTry
             this.basisGrid = myGrid
             this.oppTry = oppTry
@@ -169,7 +168,6 @@ export default {
             this.socket.emit("submitPreparation", this.basisGrid);
         }, 
         displayModalTurn(triedGrid) {
-            console.log(triedGrid)
             this.myTry = triedGrid;
             this.modalPlay = true
             this.numeberTurn++

@@ -33,7 +33,6 @@ export default class WSHandlers {
 
     async choiceTheUserVictory(player, io, idSession, game) {
         const information = await game.finishGame(player);
-        console.log(information);
         io.to("firstPlayer - " + idSession).emit("endGame", information.resultFirst)
         io.to("secondPlayer - " + idSession).emit("endGame", information.resultSecond)
     }

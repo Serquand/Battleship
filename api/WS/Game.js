@@ -96,7 +96,6 @@ export default class Game {
     async finishGame(winner) {
         //Add game in DB :
         const idWinner = winner % 2 ? this.secondPlayer.id : this.firstPlayer.id
-        console.log(idWinner)
         await GameModels.create({
             result: idWinner, 
             eloPlayer1: this.firstPlayer.Elo, 
