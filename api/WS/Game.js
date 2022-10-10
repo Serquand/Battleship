@@ -33,18 +33,19 @@ export default class Game {
      */
     checkVictory(user) {
         const grid = user == 0 ? this.firstGrid : this.secondGrid
-        const tryArray = user == 0 ? this.firstTry : this.secondTry
-        
-        for(let i = 0; i < 100; i++ ) {
-            if(grid != undefined && tryArray == undefined) return
+        let count = 0;
+
+        for(let i = 0; i < 100; i++) {
+            if(grid == 'd') count++
         }
 
-        this.status = 'E'
-        this.finishGame(user)
+        return count == 17
     }
 
-    finishGame(user) {}
 
+    finishGame() {
+        
+    }
 
     transformArrayToMatrix(grid) {
         let count = 0
@@ -162,20 +163,30 @@ export default class Game {
     setTry(shotLocation, user) {
         if(user == 0) {
             const grid = this.transformMatrixToArray(this.secondGrid)
-            console.log(grid[shotLocation])
-            const ship = grid.filter(cell => cell == grid[shotLocation])
+
+            const ship = new Array(0)
+            grid.forEach((cell, index) => {
+                if(cell == grid[shotLocation]) ship.push(index) 
+            })
+
             for (const cell of ship) {
                 if(this.firstTry[cell] != 'x' && cell != shotLocation) return 'x'
             } 
+
             for (const cell of ship) this.firstTry[cell] = 'd'
             return 'd'
         } else {
             const grid = this.transformMatrixToArray(this.firstGrid)
-            console.log(grid[shotLocation])
-            const ship = grid.filter(cell => cell == grid[shotLocation])
+            
+            const ship = new Array(0)
+            grid.forEach((cell, index) => {
+                if(cell == grid[shotLocation]) ship.push(index) 
+            })
+
             for (const cell of ship) {
                 if(this.secondTry[cell] != 'x' && cell != shotLocation) return 'x'
             } 
+
             for (const cell of ship) this.secondTry[cell] = 'd'
             return 'd'
         }

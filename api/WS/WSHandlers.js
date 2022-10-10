@@ -32,7 +32,7 @@ export default class WSHandlers {
     }
 
     choiceTheUserVictory(player, io, idSession, game) {
-        console.log(player)
+        console.log("Nouvelle victoire ! GG à ", player)
         game.finishGame()
     }
 
