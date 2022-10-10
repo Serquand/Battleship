@@ -90,7 +90,9 @@
         @madeShot="submitShot"
     />
     <ModalEndGame 
-        v-if="stateGame === 'E'"
+        :victory="true"
+        :oldElo="800"
+        :newElo="810"
     />
 </div>
 </template>
@@ -110,8 +112,8 @@ export default {
         const 
             socket = io("http://localhost:5000"), auth = useAuthStore(), basisGrid = ref([]), modalInit = ref(false), 
             modalPlay = ref(false), numberTurn = ref(0), stateGame = ref('S'), 
-            myTry = ref(new Array(100)), oppTry = ref(new Array(100))
-        return { socket, auth, basisGrid, modalInit, modalPlay, numberTurn, stateGame, oppTry, myTry };
+            myTry = ref(new Array(100)), oppTry = ref(new Array(100)), informationEndGame = ref({})
+        return { socket, auth, basisGrid, modalInit, modalPlay, numberTurn, stateGame, oppTry, myTry, informationEndGame };
     },
     created() {
         this.basisGrid = this.setupBasisGrid()
@@ -131,6 +133,7 @@ export default {
     },
     methods: {
         setEndGame(informationEndGame) {
+            this.informationEndGame = informationEndGame
             this.stateGame = 'E';
         },
         changeInformation(myGrid, myTry, oppTry) {
@@ -257,3 +260,8 @@ export default {
     transform: rotate(-45deg);
 }
 </style>
+
+<!-- v-if="stateGame === 'E'"
+        :victory="informationEndGame.victory"
+        :oldElo="informationEndGame.elo"
+        :newElo="informationEndGame.newElo" -->
