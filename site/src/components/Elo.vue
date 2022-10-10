@@ -17,7 +17,7 @@ export default {
         const x = setInterval(() => {
             this.eloDisplay++
             if(this.eloDisplay == this.elo) clearInterval(x)
-        }, 3000 / this.elo)
+        }, 1000 / this.elo)
     },
     props: {
         elo: {

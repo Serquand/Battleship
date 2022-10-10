@@ -13,17 +13,19 @@
                     message="New elo" 
                 /> 
             </div>
+
+            <div class="end-game-button-container button-container">
+                <button @click="replayAMatch">Replay</button>
+                <button @click="goHome">Home</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import router from '../router/index.js';
 import Elo from "./Elo.vue";
 export default {
-    setup() {
-
-    },
-
     props: {
         victory: {
             type: Boolean, 
@@ -38,6 +40,14 @@ export default {
             required: true 
         }     
     }, 
+    methods: {
+        goHome() {
+            router.push("/")
+        }, 
+        replayAMatch() {
+            this.$emit("replayAMatch")
+        }
+    },
     components: { Elo }
 }
 </script>

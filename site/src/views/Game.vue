@@ -93,6 +93,7 @@
         :victory="true"
         :oldElo="800"
         :newElo="810"
+        @replayAMatch="replayAMatch"
     />
 </div>
 </template>
@@ -185,6 +186,9 @@ export default {
         submitShot(index) {
             this.socket.emit("madeAShot", index)
             this.modalPlay = false
+        },
+        replayAMatch() {
+            console.log("We will replay a match !")
         }
     },
     components: {
