@@ -32,8 +32,7 @@ export default class WSHandlers {
     }
 
     choiceTheUserVictory(player, io, idSession, game) {
-        console.log("Nouvelle victoire ! GG à ", player)
-        game.finishGame()
+        const information = game.finishGame(player);
     }
 
     madeAShot(io, session, socket, idSession, indexShot) {
@@ -44,7 +43,7 @@ export default class WSHandlers {
         io.to("firstPlayer - " + idSession).emit("resultShot", session.game.firstGrid, session.game.firstTry, session.game.secondTry)
         io.to("secondPlayer - " + idSession).emit("resultShot", session.game.secondGrid, session.game.secondTry, session.game.firstTry)
 
-        if(session.game.checkVictory(player)) return this.choiceTheUserVictory(player)
+        if(session.game.checkVictory(player)) return this.choiceTheUserVictory(player, io, idSession, session.game)
         else this.choiceThePlayerTurn(player + 1, io, idSession, session.game)
     }
 

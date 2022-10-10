@@ -1,4 +1,5 @@
 import Players from "../Models/Players.js"
+import GameModels from "../Models/Game.js"
 
 export default class Game {
     constructor() {
@@ -42,8 +43,82 @@ export default class Game {
     }
 
 
-    finishGame() {
+    probabilityFirstPlayer() {
+        let difference = Math.min(this.firstPlayer.Elo - this.secondPlayer.Elo, 400)
+        return (1 / (1 + Math.pow(10, difference / -400)))
+    }
+
+    async modifyElo(winner) {
+        const probaFirst = this.probabilityFirstPlayer()
+
+        const resultFirst = winner == 0 ? 1 : 0
+        const resultSecond = winner == 0 ? 0 : 1
         
+        this.modifyEloFirst = Math.ceil(20 * (resultFirst - probaFirst))
+        this.modifyEloSecond = Math.ceil(20 * (resultSecond - 1 + probaFirst))
+        
+        const newEloFirst = this.firstPlayer.Elo + this.modifyEloFirst
+        const newEloSecond = this.secondPlayer.Elo + this.modifyEloSecond
+
+        //Update first player :
+        await Players.update({ Elo: newEloFirst }, { 
+            where: { Pseudo: this.firstPlayer.Pseudo } 
+        })
+
+        //Update second player 
+        await Players.update({ Elo: newEloSecond }, { 
+            where: { Pseudo: this.secondPlayer.Pseudo } 
+        })
+
+        await this.computeMaxElo(newEloFirst, newEloSecond)
+    }
+ 
+    async computeMaxElo(newEloFirst, newEloSecond) {
+        let firstPlayerMax = await Players.findOne({ attributes: ['MaxElo'], where: { Pseudo: this.firstPlayer.Pseudo } })
+        let secondPlayerMax = await Players.findOne({ attributes: ['MaxElo'], where: { Pseudo: this.secondPlayer.Pseudo } })
+
+        firstPlayerMax = firstPlayerMax.dataValues.MaxElo
+        secondPlayerMax = secondPlayerMax.dataValues.MaxElo
+
+        if(firstPlayerMax < newEloFirst) await Players.update({ maxElo: newEloFirst }, {
+            where: { Pseudo: this.firstPlayer.Pseudo }
+        })
+        if(secondPlayerMax < newEloSecond) await Players.update({ maxElo: newEloSecond }, {
+            where: { Pseudo: this.secondPlayer.Pseudo }
+        }) 
+    }
+
+    /**
+     * Will finish the game. 
+     * So in these method, we will add the game in the db, set the status to ended, check if the game is already finish, compute elo, modify elo, modify maxElo
+     * @returns {Object} One object information contains the elo, the modification elo, and the name for the two players 
+     */
+    async finishGame(winner) {
+        //Add game in DB :
+        const idWinner = winner % 2 ? this.secondPlayer.id : this.firstPlayer.id
+        console.log(idWinner)
+        await GameModels.create({
+            result: idWinner, 
+            eloPlayer1: this.firstPlayer.Elo, 
+            eloPlayer2: this.secondPlayer.Elo, 
+            player1: this.firstPlayer.id, 
+            player2: this.secondPlayer.id
+        })
+
+        await this.modifyElo(winner)
+
+        return {
+            resultFirst: {
+                elo: this.firstPlayer.Elo, 
+                newElo: this.firstPlayer.Elo + this.modifyEloFirst, 
+                victory: winner == 0
+            }, 
+            resultSecond: {
+                elo: this.secondPlayer.Elo, 
+                newElo: this.secondPlayer.Elo + this.modifyEloSecond, 
+                victory: winner == 1
+            }
+        }
     }
 
     transformArrayToMatrix(grid) {
@@ -264,9 +339,5 @@ export default class Game {
         if(torpedo.length != 2 || cruiser.length != 4 || destroyer1.length != 3 || destroyer2.length != 3 || aircraft.length != 5) return false 
 
         return (this.checkShip(torpedo) && this.checkShip(cruiser) && this.checkShip(destroyer1) && this.checkShip(destroyer2) && this.checkShip(aircraft))
-    }
-
-    finishTheGame() {
-        console.log("finishTheGame")
     }
 }
