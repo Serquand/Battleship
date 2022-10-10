@@ -24,8 +24,7 @@
 <script>
 export default {
     setup(props) {
-        const arrayDisplay = JSON.parse(JSON.stringify(props.arrayTried)); 
-        console.log(arrayDisplay)
+        const arrayDisplay = JSON.parse(JSON.stringify(props.arrayTried));  
         return { arrayDisplay }
     }, 
     props: {
