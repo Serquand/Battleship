@@ -15,7 +15,6 @@ let _ = new ws()
 import setup from './Models/Setup.js'
 import routerProfil from './Routes/Profil.js'
 import getRanking from './Middlewares/Ranking.js';
-import auth from './Middlewares/Profil/Auth.js'
 
 const app = express()
 const httpServer = http.createServer(app)
