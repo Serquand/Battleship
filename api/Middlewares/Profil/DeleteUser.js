@@ -1,5 +1,5 @@
-import Players from "../../../Models/Players.js"
-import Games from "../../../Models/Games.js"
+import Players from "../../Models/Players.js"
+import Games from "../../Models/Game.js"
 
 export default async (req, res) => {
     try {
