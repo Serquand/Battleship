@@ -23,6 +23,7 @@
 body  {
   background: rgb(4, 4, 28);
   color: white;
+  padding-bottom: 40px;
 }
 
 .checkbox-hack {

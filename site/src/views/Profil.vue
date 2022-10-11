@@ -9,6 +9,7 @@
             :bestElo="(informationUser.user?.MaxElo ?? 0)"
             :currentElo="(informationUser.user?.Elo ?? 0)"
         />
+        <ReviewGames :games="informationUser?.allGames ?? []" />
     </div>
 </template>
 
@@ -18,6 +19,7 @@ import { useAuthStore } from "../store/Auth.js";
 import InfoProfil from "../components/InfoProfil.vue";
 import { ref } from 'vue'
 import BoxProfilInfo from "../components/BoxProfilInfo.vue";
+import ReviewGames from "../components/ReviewGames.vue";
 
 export default {
     setup() {
@@ -30,8 +32,9 @@ export default {
             headers: { "Authorization": "Bearer " + this.auth.token }
         };
         this.informationUser = await (await fetch(url + "/profil/" + this.auth.username, requestOptions)).json()
+        console.log(this.informationUser.allGames);
     },
-    components: { InfoProfil, BoxProfilInfo }
+    components: { InfoProfil, BoxProfilInfo, ReviewGames }
 }
 </script>
 
