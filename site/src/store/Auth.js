@@ -56,5 +56,10 @@ export const useAuthStore = defineStore("Auth", {
       this.username = "";
       router.push("/");
     },
+
+    deleteAccount() {
+      if(this.token == '' || this.email == "" || this.username == "") return
+      console.log("We will delete the account !")
+    }
   },
 });

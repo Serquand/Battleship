@@ -10,6 +10,7 @@
             :currentElo="(informationUser.user?.Elo ?? 0)"
         />
         <ReviewGames :games="informationUser?.allGames ?? []" />
+        <ButtonProfil @updateAccount="updateAccount" />
     </div>
 </template>
 
@@ -20,6 +21,7 @@ import InfoProfil from "../components/InfoProfil.vue";
 import { ref } from 'vue'
 import BoxProfilInfo from "../components/BoxProfilInfo.vue";
 import ReviewGames from "../components/ReviewGames.vue";
+import ButtonProfil from "../components/ButtonProfil.vue";
 
 export default {
     setup() {
@@ -34,7 +36,12 @@ export default {
         this.informationUser = await (await fetch(url + "/profil/" + this.auth.username, requestOptions)).json()
         console.log(this.informationUser.allGames);
     },
-    components: { InfoProfil, BoxProfilInfo, ReviewGames }
+    methods: {
+        updateAccount() {
+            console.log("We will update the account !")
+        }
+    },
+    components: { InfoProfil, BoxProfilInfo, ReviewGames, ButtonProfil }
 }
 </script>
 
