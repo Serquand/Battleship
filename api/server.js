@@ -8,11 +8,14 @@ import { Server } from "socket.io"
 import cors from 'cors'
 import { v4 } from 'uuid'
 
-import setup from './Models/Setup.js'
-import routerProfil from './Routes/Profil.js'
 import Game from './WS/Game.js'
 import { default as ws } from './WS/WSHandlers.js';
 let _ = new ws()
+
+import setup from './Models/Setup.js'
+import routerProfil from './Routes/Profil.js'
+import getRanking from './Middlewares/Ranking.js';
+import auth from './Middlewares/Profil/Auth.js'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -23,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
 app.use("/profil", routerProfil)
+app.get("/ranking", getRanking)
 
 const sessions = {}
 let tempIdGame = null
