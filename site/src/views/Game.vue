@@ -92,7 +92,7 @@
     <ModalEndGame 
         :victory="true"
         :oldElo="800"
-        :newElo="810"
+        :newElo="1810"
         @replayAMatch="replayAMatch"
     />
 </div>
