@@ -1,7 +1,7 @@
 <template>
-    <div class="elo-container">
+    <div :class="['elo-container', elo == undefined ? 'pseudo' : 'elo']">
         <h4>{{ message + ':' }}</h4>
-        <p>{{ eloDisplay }}</p>
+        <p>{{ (elo == undefined ? pseudo : eloDisplay) }}</p>
     </div>
 </template>
 
@@ -9,7 +9,8 @@
 import { ref } from 'vue';
 
 export default {
-    setup() {
+    setup(props) {
+        console.log(props)
         const eloDisplay = ref(0)
         return { eloDisplay }
     },
@@ -21,11 +22,14 @@ export default {
     },
     props: {
         elo: {
-            type: Number, 
-            required: true
+            type: Number
         }, 
         message: { 
+            type: String, 
             required: true
+        }, 
+        pseudo: {
+            type: String, 
         }
     }, 
 }
@@ -34,11 +38,34 @@ export default {
 <style>
 .elo-container {
     display: grid;
-    width: 100px;
-    height: 100px;
-    padding: 10px;
     border: 1px solid #555;
     border-radius: 10px;
+    height: 100px;
+    padding: 10px;
+}
+
+.pseudo {
+    position: relative;
+    width: fit-content;
+    min-width: 100px;
+    padding: 10px 50px;
+}
+
+.pseudo h4 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.pseudo p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.elo {
+    width: 100px;
 }
 
 .elo-container :is(p, h4) {

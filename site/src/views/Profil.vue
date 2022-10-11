@@ -1,8 +1,13 @@
 <template>
     <div class="profil-container">
         <InfoProfil 
-            :email="informationUser.user.Email"
-            :username="informationUser.user.Pseudo"
+            :email="(informationUser.user?.Email ?? '')"
+            :username="(informationUser.user?.Pseudo ?? '')"
+        />
+        <BoxProfilInfo 
+            :pseudo="(informationUser.user?.Pseudo ?? '')"
+            :bestElo="(informationUser.user?.MaxElo ?? 0)"
+            :currentElo="(informationUser.user?.Elo ?? 0)"
         />
     </div>
 </template>
@@ -12,6 +17,7 @@ import { url } from "../../config.json";
 import { useAuthStore } from "../store/Auth.js";
 import InfoProfil from "../components/InfoProfil.vue";
 import { ref } from 'vue'
+import BoxProfilInfo from "../components/BoxProfilInfo.vue";
 
 export default {
     setup() {
@@ -24,9 +30,8 @@ export default {
             headers: { "Authorization": "Bearer " + this.auth.token }
         };
         this.informationUser = await (await fetch(url + "/profil/" + this.auth.username, requestOptions)).json()
-        console.log(this.informationUser);
     },
-    components: { InfoProfil }
+    components: { InfoProfil, BoxProfilInfo }
 }
 </script>
 
