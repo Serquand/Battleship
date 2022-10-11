@@ -90,9 +90,10 @@
         @madeShot="submitShot"
     />
     <ModalEndGame 
-        :victory="true"
-        :oldElo="800"
-        :newElo="1810"
+        v-if="stateGame === 'E'"
+        :victory="informationEndGame.victory"
+        :oldElo="informationEndGame.elo"
+        :newElo="informationEndGame.newElo"
         @replayAMatch="replayAMatch"
     />
 </div>
@@ -264,8 +265,3 @@ export default {
     transform: rotate(-45deg);
 }
 </style>
-
-<!-- v-if="stateGame === 'E'"
-        :victory="informationEndGame.victory"
-        :oldElo="informationEndGame.elo"
-        :newElo="informationEndGame.newElo" -->
