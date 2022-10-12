@@ -60,6 +60,10 @@ export const useAuthStore = defineStore("Auth", {
     deleteAccount() {
       if(this.token == '' || this.email == "" || this.username == "") return
       console.log("We will delete the account !")
+    }, 
+
+    updateAccount() {
+      console.log('updateAccount()')
     }
   },
 });

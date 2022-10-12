@@ -11,22 +11,30 @@
         />
         <ReviewGames :games="informationUser?.allGames ?? []" />
         <ButtonProfil @updateAccount="updateAccount" />
+        <ModalUpdateProfil 
+            v-if="updateConfirm"
+            :email="(informationUser.user?.Email ?? '')"
+            :username="(informationUser.user?.Pseudo ?? '')"
+            @endUpdate="endUpdate"
+        />
     </div>
 </template>
 
 <script>
 import { url } from "../../config.json";
 import { useAuthStore } from "../store/Auth.js";
-import InfoProfil from "../components/InfoProfil.vue";
 import { ref } from 'vue'
+
+import InfoProfil from "../components/InfoProfil.vue";
 import BoxProfilInfo from "../components/BoxProfilInfo.vue";
 import ReviewGames from "../components/ReviewGames.vue";
 import ButtonProfil from "../components/ButtonProfil.vue";
+import ModalUpdateProfil from "../components/ModalUpdateProfil.vue";
 
 export default {
     setup() {
-        const auth = useAuthStore(), informationUser = ref({})
-        return { auth, informationUser };
+        const auth = useAuthStore(), informationUser = ref({}), updateConfirm = ref(false)
+        return { auth, informationUser, updateConfirm };
     },
     async created() {
         const requestOptions = {
@@ -38,10 +46,13 @@ export default {
     },
     methods: {
         updateAccount() {
-            console.log("We will update the account !")
+            this.updateConfirm = true
+        }, 
+        endUpdate() {
+            this.updateConfirm = false
         }
     },
-    components: { InfoProfil, BoxProfilInfo, ReviewGames, ButtonProfil }
+    components: { InfoProfil, BoxProfilInfo, ReviewGames, ButtonProfil, ModalUpdateProfil }
 }
 </script>
 
