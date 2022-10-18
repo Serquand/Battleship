@@ -49,7 +49,7 @@
                     placeholder="Confirm"
                 />
             </div>
-            <button>Se connecter</button>
+            <button>{{ mode == 'I' ? "Sign up" : "Sign in" }}</button>
         </form>
 
         <p @click="toggleMode">{{ mode == 'I' ? "Already have an account ? Sign in here !" : "Not have an account yet ? Sign up here !"}}</p>
