@@ -75,8 +75,21 @@ export const useAuthStore = defineStore("Auth", {
       router.push("/");
     }, 
 
-    updateAccount() {
-      console.log('updateAccount()')
+    async updateAccount(email, password, resetPwd, name) {
+      if(password != resetPwd) return
+ 
+      const pseudo = name ?? this.username
+
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Authorization": "Bearer " + this.token, 
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({ pseudo, email, password, resetPwd })
+      }
+
+      await fetch(url + "/profil/" + this.username, requestOptions)
     }
   },
 });
