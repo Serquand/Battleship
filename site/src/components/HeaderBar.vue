@@ -39,12 +39,19 @@
 
 <script>
 import { useAuthStore } from "../store/Auth";
+import router from '../router/index';
 
 export default {
   setup() {
     const auth = useAuthStore();
     return { auth };
   },
+
+  created() {
+    router.afterEach(() => {
+      document.querySelector("#checkbox-hack-nav").click()
+    })
+  }
 };
 </script>
 
