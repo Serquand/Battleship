@@ -1,8 +1,14 @@
 <template>
     <div class="box-profil">
         <Elo
+            v-if="rank == undefined"
             message="Pseudo" 
             :pseudo="authStore.username"
+        />
+        <Elo
+            v-else
+            message="Rank" 
+            :rank="rank"
         />
         <Elo 
             message="Elo"
@@ -33,6 +39,9 @@ export default {
         bestElo: {
             type: Number, 
             required: true
+        }, 
+        rank: {
+            type: Number, 
         }, 
     }
 }

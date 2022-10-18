@@ -1,7 +1,7 @@
 <template>
     <div :class="['elo-container', elo == undefined ? 'pseudo' : 'elo']">
         <h4>{{ message + ':' }}</h4>
-        <p>{{ (elo == undefined ? pseudo : eloDisplay) }}</p>
+        <p>{{ (elo == undefined ? pseudo == undefined ? rank : pseudo : eloDisplay) }}</p>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
 import { ref } from 'vue';
 
 export default {
-    setup(props) {
+    setup() {
         const eloDisplay = ref(0)
         return { eloDisplay }
     },
@@ -28,7 +28,10 @@ export default {
             required: true
         }, 
         pseudo: {
-            type: String, 
+            type: String
+        }, 
+        rank: {
+            type: Number
         }
     }, 
 }

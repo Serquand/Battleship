@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style>
-.profil-container {
+.profil-container, .ranking-container {
     width: 80%;
     margin: auto;
 }
