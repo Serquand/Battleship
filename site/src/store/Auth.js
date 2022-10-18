@@ -21,11 +21,9 @@ export const useAuthStore = defineStore("Auth", {
       };
 
       let res = await fetch(url + "/profil/login", requestOptions);      
-      console.log(res);
       if(!(res.status === 200 || res.status === 201)) return { success: false, error: (await res.json()).error }
       
       res = await res.json();
-      console.log(res);
       this.token = res.token;
       this.username = res.userId;
       this.email = res.email;
@@ -98,7 +96,6 @@ export const useAuthStore = defineStore("Auth", {
         return false
       }
       res = await res.json()
-      console.log(res)
       this.token = res.token;
       this.username = res.user;
       this.email = res.email;

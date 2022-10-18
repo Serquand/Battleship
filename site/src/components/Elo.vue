@@ -10,7 +10,6 @@ import { ref } from 'vue';
 
 export default {
     setup(props) {
-        console.log(props)
         const eloDisplay = ref(0)
         return { eloDisplay }
     },
