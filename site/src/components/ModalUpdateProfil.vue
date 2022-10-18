@@ -9,7 +9,7 @@
                         id="pseudo-update" 
                         class="update-inpuput" 
                         type="text"
-                        :value="username"
+                        v-model="pseudo"
                     />
                 </div>
                 <div>
@@ -18,7 +18,7 @@
                         id="email-update" 
                         class="update-inpuput" 
                         type="text" 
-                        :value="email"
+                        v-model="mail"
                     />
                 </div>
                 <div>
@@ -28,6 +28,7 @@
                         class="update-inpuput" 
                         type="password" 
                         placeholder="Password..."
+                        v-model="password"
                     />
                 </div>
                 <div>
@@ -37,6 +38,7 @@
                         class="update-inpuput" 
                         type="password"
                         placeholder="Confirm.."
+                        v-model="resetPwd"
                     />
                 </div>
             </div>
@@ -57,14 +59,20 @@
 
 <script>
 import { useAuthStore } from '../store/Auth.js';
+import { ref } from 'vue'
 
 export default {
+    setup(props) {
+        const auth = useAuthStore(), pseudo = ref(props.username), mail = ref(props.email), password = ref(""), resetPwd = ref("")
+
+        return { auth, pseudo, mail, password, resetPwd }
+    },
     methods: {
         endUpdate() {
             this.$emit("endUpdate")
         }, 
         updateAccount() {
-            (useAuthStore()).updateAccount()
+            this.auth.updateAccount(this.mail, this.password, this.resetPwd, this.pseudo)
             
             this.$emit("endUpdate")
         }
