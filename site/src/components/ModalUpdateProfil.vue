@@ -71,10 +71,8 @@ export default {
         endUpdate() {
             this.$emit("endUpdate")
         }, 
-        updateAccount() {
-            this.auth.updateAccount(this.mail, this.password, this.resetPwd, this.pseudo)
-            
-            this.$emit("endUpdate")
+        async updateAccount() {
+            if(await this.auth.updateAccount(this.mail, this.password, this.resetPwd, this.pseudo)) this.$emit("endUpdate")
         }
     }, 
     props: {

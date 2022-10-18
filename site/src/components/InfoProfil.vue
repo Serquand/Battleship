@@ -4,24 +4,20 @@
             <img src="/assets/Profil.png" alt="Profil" />
         </div>
         <div>
-            <h4 class="username-profil">{{ username }}</h4>
-            <p class="email-profil">{{ email }}</p>
+            <h4 class="username-profil">{{ authStore.username }}</h4>
+            <p class="email-profil">{{ authStore.email }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { useAuthStore } from "../store/Auth";
+
 export default {
-    props: {
-        username: {
-            type: String, 
-            required: true
-        }, 
-        email: {
-            type: String, 
-            required: true
-        }
-    }
+    setup() {
+        const authStore = useAuthStore();
+        return { authStore }
+    },
 }
 </script>
 

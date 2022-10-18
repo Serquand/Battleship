@@ -2,7 +2,7 @@
     <div class="box-profil">
         <Elo
             message="Pseudo" 
-            :pseudo="pseudo"
+            :pseudo="authStore.username"
         />
         <Elo 
             message="Elo"
@@ -17,8 +17,13 @@
 
 <script>
 import Elo from './Elo.vue';
+import { useAuthStore } from "../store/Auth";
 
 export default {
+    setup() {
+        const authStore = useAuthStore();
+        return { authStore }
+    },
     components: { Elo }, 
     props: {
         currentElo: {
@@ -29,10 +34,6 @@ export default {
             type: Number, 
             required: true
         }, 
-        pseudo: {
-            type: String, 
-            required: true
-        }
     }
 }
 </script>

@@ -1,11 +1,7 @@
 <template>
     <div class="profil-container">
-        <InfoProfil 
-            :email="(informationUser.user?.Email ?? '')"
-            :username="(informationUser.user?.Pseudo ?? '')"
-        />
+        <InfoProfil />
         <BoxProfilInfo 
-            :pseudo="(informationUser.user?.Pseudo ?? '')"
             :bestElo="(informationUser.user?.MaxElo ?? 0)"
             :currentElo="(informationUser.user?.Elo ?? 0)"
         />
@@ -13,8 +9,8 @@
         <ButtonProfil @updateAccount="updateAccount" />
         <ModalUpdateProfil 
             v-if="updateConfirm"
-            :email="(informationUser.user?.Email ?? '')"
-            :username="(informationUser.user?.Pseudo ?? '')"
+            :email="auth.email"
+            :username="auth.username"
             @endUpdate="endUpdate"
         />
     </div>
@@ -42,7 +38,7 @@ export default {
             headers: { "Authorization": "Bearer " + this.auth.token }
         };
         this.informationUser = await (await fetch(url + "/profil/" + this.auth.username, requestOptions)).json()
-        console.log(this.informationUser.allGames);
+        this.auth.email = this.informationUser.user?.Email
     },
     methods: {
         updateAccount() {

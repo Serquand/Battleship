@@ -90,7 +90,17 @@ export const useAuthStore = defineStore("Auth", {
         body: JSON.stringify({ pseudo, email, password })
       }
 
-      await fetch(url + "/profil/" + this.username, requestOptions)
-    }
+      let res = await fetch(url + "/profil/" + this.username, requestOptions)
+      if(res.status == 400 || res.status == 401) {
+        //TODO : Display the sign in banner with the error  
+        return false
+      }
+      res = await res.json()
+      console.log(res)
+      this.token = res.token;
+      this.username = res.user;
+      this.email = res.email;
+      return true
+    } 
   },
 });
