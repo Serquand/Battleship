@@ -49,7 +49,8 @@ export default {
 
   created() {
     router.afterEach(() => {
-      document.querySelector("#checkbox-hack-nav").click()
+      const checkboxNav = document.querySelector("#checkbox-hack-nav")
+      if(checkboxNav.checked) checkboxNav.click()
     })
   }
 };
