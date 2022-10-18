@@ -67,6 +67,10 @@ export const useAuthStore = defineStore("Auth", {
         },
       }
 
+      this.token == ''
+      this.email == ""
+      this.username == ""
+
       await fetch(url + "/profil/" + this.username, requestOptions)
       router.push("/");
     }, 
