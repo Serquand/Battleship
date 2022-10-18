@@ -57,9 +57,18 @@ export const useAuthStore = defineStore("Auth", {
       router.push("/");
     },
 
-    deleteAccount() {
+    async deleteAccount() {
       if(this.token == '' || this.email == "" || this.username == "") return
-      console.log("We will delete the account !")
+
+      var requestOptions = { 
+        method: "DELETE", 
+        headers: {
+          "Authorization": "Bearer " + this.token
+        },
+      }
+
+      await fetch(url + "/profil/" + this.username, requestOptions)
+      router.push("/");
     }, 
 
     updateAccount() {
