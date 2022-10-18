@@ -41,44 +41,26 @@ export default {
     border: 1px solid #555;
     border-radius: 10px;
     height: 100px;
-    padding: 10px;
-}
-
-.pseudo {
+    padding: 10px 30px;
     position: relative;
     width: fit-content;
-    min-width: 100px;
-    padding: 10px 50px;
 }
 
-.pseudo h4 {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-
-.pseudo p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.elo {
-    width: 100px;
-}
-
-.elo-container :is(p, h4) {
+.elo-container > * {
     font-style: italic;
 }
 
 .elo-container h4 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     font-size: 12px;
     text-decoration: underline;
     font-weight: 600;
 }
 
 .elo-container p {
+    margin: auto;
     font-weight: 900;
     font-size: 35px;
     text-align: center;
