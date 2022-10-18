@@ -7,7 +7,7 @@
                 <p class="glitchedAnim">404</p>
                 <p class="glitchedAnim">404</p>
             </div>
-            <p class="txt-info">Wopsy, cette page n'existe pas ! 🛠️</p>
+            <p class="txt-info">Wopsy, this page doesn't exist ! 🛠️</p>
         </div>
     </div>
 </template>
@@ -19,15 +19,6 @@ export default {
 </script>
 
 <style scoped>
-.not-found-main-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #000;
-    z-index: 8989898989898989;
-}
 .info {
   position:absolute;
   top: 40%;
@@ -41,8 +32,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.glitchedAnim,
-.invisible-text {
+.glitchedAnim, .invisible-text {
   font-family: Unica One, sans-serif;
   font-size: 250px;
   font-weight: 400;
