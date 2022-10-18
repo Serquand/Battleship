@@ -5,10 +5,9 @@ import jwt from 'jsonwebtoken';
 const { sign, verify } = jwt;
 import { hash, compare } from 'bcrypt';
 
-export default function login(req, res, next) {
+export default function login(req, res) {
     if(req.body.mode.charAt(0) === 'C') return signIn(req, res)
     if(req.body.mode.charAt(0) === 'I') return signUp(req, res)
-    if(req.body.mode.charAt(0) === 'R') return reset(req, res)
     return res.status(400).json({ error: 'Invalid request !' })
 }
 
@@ -44,12 +43,8 @@ const signUp = async (req, res, next) => {
     const myHashPwd = await hash(password, 10)
     await Players.create({ Pseudo: username, Email: email, Password: myHashPwd })
     return res.status(201).json({ 
-        user: username, 
+        userId: username, 
         token: sign({ userId: username }, process.env.SALT_JWT), 
         information: "Inscription réussie !"  
     })
-}
-
-const reset = (req, res, next) => {
-
 }
