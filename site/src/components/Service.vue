@@ -34,7 +34,6 @@ export default {
             entries.forEach((entry) => {
                 if(entry.intersectionRatio > 0) {
                     const currentSection = entry.target.classList[0].replace("service-", '').trim()
-                    console.log(currentSection)
                     if(currentSection === this.serviceName) this.visible = true;
                 }
             })
