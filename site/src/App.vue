@@ -45,6 +45,10 @@ body  {
   justify-content: center;
 }
 
+.app {
+  padding-bottom: 50px;
+}
+
 .modal-content {
   color: #444;
   background: #fff;

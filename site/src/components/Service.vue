@@ -1,17 +1,15 @@
 <template>
-    <div :class="['service-container', visible ? 'service-container-visible' : '']">
+    <div :class="['service-' + serviceName, 'service-container', visible ? 'service-container-visible' : '']">
         <div class="service">
             <div class="content"></div> 
             <div class="overlay"></div>
-            <p v-if="!title.startsWith('/')" class="title-service title-text-service">{{ title }}</p> 
-            <img v-else class="title-service" :src="title" />
+            <p class="title-service title-text-service">{{ title }}</p> 
         </div>
         <h4 class="description">{{ description }}</h4>
     </div>
 </template>
 
 <script>
- 
 import { ref } from 'vue';
 
 export default {
@@ -27,8 +25,7 @@ export default {
     }, 
 
     setup(props) {
-        const visible = ref(false), serviceName = props.title.startsWith("/") ? 'incubateur' : props.title
-
+        const visible = ref(false), serviceName = JSON.parse(JSON.stringify(props.title))
         return { visible, serviceName }
     }, 
 
@@ -36,13 +33,14 @@ export default {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if(entry.intersectionRatio > 0) {
-                    const currentSection = entry.target.getAttribute("class").replace("bloc-service", "").replace("service-", '').trim()
+                    const currentSection = entry.target.classList[0].replace("service-", '').trim()
+                    console.log(currentSection)
                     if(currentSection === this.serviceName) this.visible = true;
                 }
             })
         }, { rootMargin: '0px 0px -300px 0px' })
 
-        document.querySelectorAll('.bloc-service').forEach(service => observer.observe(service))
+        document.querySelectorAll('.services-content > div').forEach(service => observer.observe(service))
     }
 }
 </script>
@@ -81,14 +79,14 @@ export default {
     height: 240px;
     width: 240px;
     clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 70%, 50% 100%, 0 70%);
-    background-color: white;
+    background-color: rgb(4, 4, 28);
 }
 
 .overlay {
     top: 0;
     width: 100%;
     height: 0%;
-    background-color: darkblue;
+    background-color: white;
     position: absolute;
     z-index: -5;
 }
@@ -111,7 +109,7 @@ img.title-service {
     font-size: 35px;
     font-weight: 600;
     font-variant-caps: small-caps;
-    color: black !important;
+    color: white;
 }
 
 .description {
