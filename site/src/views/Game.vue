@@ -201,6 +201,32 @@ export default {
 </script>
 
 <style>
+.game, .prepared-game {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.prepared-game button {
+    display: block;
+    padding: 0.5rem 2rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+    margin-bottom: 25px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0);
+    color: white;
+    transition: all .5s ease-in;
+}
+
+.prepared-game button:hover {
+    background: #fff;
+    color: rgb(4, 4, 28);
+}   
+
 .board-container {
     display: flex;
     flex-direction: column;
@@ -218,7 +244,6 @@ export default {
     display: flex;
 }
 
-
 :is(.opponent-board, .my-board) > div > div {
     height: 28px;
     width: 28px;
@@ -235,8 +260,24 @@ export default {
     position: relative;
 }
 
-.A, .D1, .D2, .T, .C {
-    background-color: #fff;  
+.A {
+    background-color: yellow;  
+}
+
+.D1 {
+    background-color: lightblue;
+}
+
+.D2 {
+    background-color: purple;
+}
+
+.T {
+    background-color: white;
+}
+
+.C {
+    background-color: orange;
 }
 
 .destroyShip {
@@ -258,9 +299,11 @@ export default {
     background-color: red;
     border-radius: 50px;
 }
+
 .touch:before {
     transform: rotate(45deg);
 }
+
 .touch:after {
     transform: rotate(-45deg);
 }
