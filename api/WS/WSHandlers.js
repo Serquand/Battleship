@@ -46,7 +46,7 @@ export default class WSHandlers {
         io.to("secondPlayer - " + idSession).emit("resultShot", session.game.secondGrid, session.game.secondTry, session.game.firstTry)
 
         if(session.game.checkVictory(player)) return this.choiceTheUserVictory(player, io, idSession, session.game)
-        else this.choiceThePlayerTurn(player + 1, io, idSession, session.game)
+        this.choiceThePlayerTurn(player + 1, io, idSession, session.game)
     }
 
     shuffleGrid(session, socket) {

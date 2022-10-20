@@ -69,7 +69,7 @@
             <button
                 @click="sendShuffle"
                 class="button button-prepared button-shuffled"
-            >shuffle
+            >Shuffle
             </button>
             
             <button
@@ -94,7 +94,6 @@
         :victory="informationEndGame.victory"
         :oldElo="informationEndGame.elo"
         :newElo="informationEndGame.newElo"
-        @replayAMatch="replayAMatch"
     />
 </div>
 </template>

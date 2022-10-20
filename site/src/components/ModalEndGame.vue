@@ -15,7 +15,6 @@
             </div>
 
             <div class="end-game-button-container button-container">
-                <button @click="replayAMatch">Replay</button>
                 <button @click="goHome">Home</button>
             </div>
         </div>
@@ -44,9 +43,6 @@ export default {
         goHome() {
             router.push("/")
         }, 
-        replayAMatch() {
-            this.$emit("replayAMatch")
-        }
     },
     components: { Elo }
 }

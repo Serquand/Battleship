@@ -74,7 +74,6 @@ io.on("connection", socket => {
         socket.on("shuffleGrid", () => _.shuffleGrid(sessions[msg], socket))
         socket.on("submitPreparation", preparation => _.submitPreparation(io, socket, sessions[msg], msg, preparation))
         socket.on("madeAShot", indexShot => _.madeAShot(io, sessions[msg], socket, msg, indexShot));
-        socket.on("disconnect", () => console.log("disconnect"))
     })
 })
 
