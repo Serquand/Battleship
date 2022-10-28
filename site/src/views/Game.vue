@@ -187,9 +187,6 @@ export default {
             this.socket.emit("madeAShot", index)
             this.modalPlay = false
         },
-        replayAMatch() {
-            console.log("We will replay a match !")
-        }
     },
     components: {
     WaitingGameModal,
