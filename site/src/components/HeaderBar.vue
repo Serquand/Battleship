@@ -68,6 +68,10 @@ export default {
   border-bottom: 1px solid whitesmoke;
 }
 
+.info-header h1 {
+  padding-top: 8px;
+}
+
 .title-container {
   display: flex;
   flex-direction: column;
