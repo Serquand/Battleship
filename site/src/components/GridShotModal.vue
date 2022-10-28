@@ -42,8 +42,8 @@ export default {
 </script>
 
 <style>
-    .modal-content {
-        padding: 50px !important;
+    .grid-shot-modal .modal-content {
+        padding: 50px;
         border-radius: 20px;
     }
 
@@ -76,4 +76,24 @@ export default {
         background: white;
     }
 
+    @media all and (max-width: 450px) {
+        .grid-shot-modal .modal-content {
+            padding: 20px !important;
+            border-radius: 10px;
+        }
+    }
+
+    @media all and (max-width: 450px) {
+        .grid-shot-modal .grid-content {
+            background-color: rgb(4, 4, 28);
+            display: grid;
+            grid-template: repeat(10, 27px) / repeat(10, 27px);
+        }
+
+        .grid-shot-modal .grid-content > div {
+            width: 26px;
+            height: 26px;
+            border: none;
+        }
+    }
 </style>

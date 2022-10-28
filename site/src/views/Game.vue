@@ -306,4 +306,23 @@ export default {
 .touch:after {
     transform: rotate(-45deg);
 }
+
+@media all and (max-width: 500px) {
+    .prepared-game {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+    }
+}
+
+@media all and (max-width: 450px) {
+    .prepared-game {
+        flex-direction: column;
+    }
+
+    .prepared-game > div:last-child {
+        display: flex;
+        gap: 25px;
+    }
+}
 </style>

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 const { sign, verify } = jwt;
+
 export default class WSHandlers {
     auth (userInformation) {
         if(!userInformation) return false

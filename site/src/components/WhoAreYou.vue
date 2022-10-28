@@ -57,4 +57,11 @@ export default {
     font-weight: 600;
     line-height: 25px;
 }
+
+@media all and (max-width: 750px) {
+    .who-are-you > div {
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+}
 </style>

@@ -57,4 +57,11 @@ export default {
     width: 80%;
     margin: auto;
 }
+
+@media all and (max-width: 700px) {
+    .profil-container, .ranking-container {
+        width: calc(100% - 30px);
+        margin: auto;
+    }
+}
 </style>

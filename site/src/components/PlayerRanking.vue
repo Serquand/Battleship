@@ -45,7 +45,6 @@ export default {
 .player-ranking-container {
     display: flex;
     width: 60%;
-    min-width: 300px;
     margin: auto;
     border: 1px solid #555;
     padding: 15px 50px;
@@ -64,5 +63,21 @@ export default {
     padding: 5px 8px;
     border-radius: 4px;
     font-size: 18px;
+}
+
+@media all and (max-width: 1000px) {
+    .player-ranking-container {
+        width: 80%;   
+    }
+}
+
+@media all and (max-width: 500px) { 
+    .player-ranking-container {
+        width: calc(100% - 30px);
+        padding: 15px 10px;
+    }
+    .current-elo-ranking {
+        display: none;
+    }
 }
 </style>

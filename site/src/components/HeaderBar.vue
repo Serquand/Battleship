@@ -115,4 +115,16 @@ input:checked + .nav-app {
   cursor: pointer;
   color: rgb(4, 4, 28);
 }
+
+@media all and (max-width: 1100px) {
+  .info-header {
+    padding: 20px 50px;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .info-header {
+    padding: 20px;
+  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="button-profil">
+    <div class="button-profil-container">
         <button 
             class="button button-profil"
             @click="logout"
@@ -8,12 +8,12 @@
         <button 
             class="button button-profil"
             @click="updateAccount"
-        >Update  account</button>
+        >Update <span>account</span></button>
         
         <button 
             class="button button-profil"
             @click="deleteAccount"
-        >Delete account</button>
+        >Delete <span>account</span></button>
     </div>
 </template>
 
@@ -36,14 +36,14 @@ export default {
 </script>
 
 <style>
-    .button-profil {
+    .button-profil-container {
         margin-top: 25px;
         display: flex;
         justify-content: center;
         gap: 20px;    
     }
 
-    .button-profil button {
+    .button-profil-container button {
         cursor: pointer;
         background: rgba(0, 0, 0, 0);
         color: white;
@@ -53,8 +53,24 @@ export default {
         transition: .7s all;
     }
 
-    .button-profil button:hover {
+    .button-profil-container button:hover {
         background-color: #fff;
         color: rgb(4, 4, 28);
+    }
+
+    @media all and (max-width: 700px) {
+        .button-profil span {
+            display: none;
+        }
+    }
+
+    @media all and (max-width: 500px) {
+        .button-profil-container {
+            flex-direction: column;
+            width: 60%;
+            margin: auto;
+            gap: 20px;
+            margin-top: 35px;
+        }
     }
 </style>

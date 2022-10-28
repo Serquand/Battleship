@@ -45,7 +45,6 @@ export default {
 .review-game {
     display: flex;
     width: 60%;
-    min-width: 300px;
     margin: auto;
     border: 1px solid #555;
     padding: 15px 50px;
@@ -83,4 +82,35 @@ export default {
     font-size: 12px;
     font-style: italic;
 }
+
+@media all and (max-width: 1000px) {
+    .review-game {
+        width: 80%;
+    }
+}
+
+@media all and (max-width: 700px) {
+    .review-game {
+        padding: 15px 10px;
+    }
+
+    .review-date {
+        display: none;
+    }
+
+    .review-result, .review-player p :first-child {
+        font-size: 14px !important;
+    }
+
+    .review-result {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        padding: 0 !important;
+    }
+
+    .review-result p, .review-player p :last-child {
+        display: none !important;
+    }
+} 
 </style>
