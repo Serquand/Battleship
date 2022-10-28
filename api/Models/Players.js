@@ -38,12 +38,6 @@ export default sequelize.define("Player", {
         type: DataTypes.STRING,
         allowNull: false
     },
-
-    NumberOfSuper: {
-        type: DataTypes.INTEGER, 
-        allowNull: false, 
-        defaultValue: 0
-    }
 }, {
     timestamps: false,
     sequelize, 
