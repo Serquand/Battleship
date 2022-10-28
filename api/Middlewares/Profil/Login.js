@@ -20,31 +20,31 @@ const signIn = async (req, res, next) => {
     const user = { pseudo: req.body.username, password: req.body.pwd }
     const { rows } = await Players.findAndCountAll({ where: { Pseudo: user.pseudo} }) 
     if(rows.length == 0 || (!(await compare(user.password, rows[0].dataValues.Password))))
-        return res.status(401).send({ error: "Pseudo ou mot de passe incorrect" })
+        return res.status(401).send({ error: "Wrong pseudo or password" })
 
     return res.status(200).json({ 
             userId: user.pseudo, 
             token: sign({ userId: user.pseudo }, process.env.SALT_JWT, { expiresIn: '24h' }), 
-            information: "Connexion réussie !"  
+            information: "Succesfullly connected !"  
         })
 }
 
 const signUp = async (req, res, next) => {
     let email = req.body.email, username = req.body.username, password = req.body.pwd
-    if(!emailValid(email)) return res.status(401).send({ message: "Email non valide." })
+    if(!emailValid(email)) return res.status(401).send({ message: "Unvalid email." })
 
     const numberEmail = await Players.count({ where: { Email: email } })
     const numberPseudo = await Players.count({ where: { Pseudo: username } })
 
-    if(numberEmail && numberPseudo) return res.status(401).json({ error: "Pseudo et adresse mail déjà utilisé." })
-    if(numberEmail) return res.status(401).json({ error: "Adresse mail déjà utilisé." })
-    if(numberPseudo) return res.status(401).json({ error: "Pseudo déjà utilisé." })
+    if(numberEmail && numberPseudo) return res.status(401).json({ error: "Pseudo et email already used." })
+    if(numberEmail) return res.status(401).json({ error: "Email already used." })
+    if(numberPseudo) return res.status(401).json({ error: "Pseudo already used." })
 
     const myHashPwd = await hash(password, 10)
     await Players.create({ Pseudo: username, Email: email, Password: myHashPwd })
     return res.status(201).json({ 
         userId: username, 
         token: sign({ userId: username }, process.env.SALT_JWT), 
-        information: "Inscription réussie !"  
+        information: "Successfully signed up !"  
     })
 }

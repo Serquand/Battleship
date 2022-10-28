@@ -1,6 +1,6 @@
 <template>
     <section id="services">
-        <h2 id="services-title">Nos services</h2>
+        <h2 id="services-title">Our services</h2>
         <div class="services-content">
             <Service 
                 description="More than 10K games already played !"
