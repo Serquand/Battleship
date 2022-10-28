@@ -9,7 +9,11 @@ export default async () => {
         .then(async () => {
             await Players.findOrCreate({
                 where: {
-                    [Op.or]: [{ Pseudo: 'Marthieu2' }, { Email: 'matthieu.evuort@efrei.net' }], 
+                    [Op.or]: [
+                        { Pseudo: 'Marthieu2' }, 
+                        { Email: 'matthieu.evuort@efrei.net' }, 
+                        { id: "550c252f-6d23-4633-b06d-6c521c2499ef" }
+                    ], 
                 },
                 defaults: { 
                     id: "550c252f-6d23-4633-b06d-6c521c2499ef", 
@@ -21,7 +25,11 @@ export default async () => {
 
             await Players.findOrCreate({
                 where: {
-                    [Op.or]: [{ Pseudo: 'covowel03' }, { Email: 'marty.evuort@efrei.net' }], 
+                    [Op.or]: [
+                        { Pseudo: 'covowel03' }, 
+                        { Email: 'marty.evuort@efrei.net' },
+                        { id: "642284b9-e0eb-4561-9762-6b144330efba" }    
+                    ], 
                 }, 
                 defaults: { 
                     id: "642284b9-e0eb-4561-9762-6b144330efba",
@@ -33,7 +41,11 @@ export default async () => {
 
             await Players.findOrCreate({
                 where: {
-                    [Op.or]: [{ Pseudo: 'Serquand' }, { Email: 'esteban.vincent@efrei.net' }],
+                    [Op.or]: [
+                        { Pseudo: 'Serquand' }, 
+                        { Email: 'esteban.vincent@efrei.net' },
+                        { id: "f51d2dff-ab57-4211-9ee2-eeada9a84b72" } 
+                    ],
                 }, 
                 defaults: { 
                     Pseudo: 'Serquand',
