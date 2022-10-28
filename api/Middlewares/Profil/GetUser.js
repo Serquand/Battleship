@@ -33,7 +33,7 @@ const getUser = async (req, res) => {
         where: {
             Pseudo: req.params.user, 
         }, 
-        attributes: ['Pseudo', "Email", "Elo", "MaxElo", "NumberOfSuper", "id"]
+        attributes: ['Pseudo', "Email", "Elo", "MaxElo", "id"]
     })).dataValues
 
     const idUser = userDb.id;
